@@ -9,10 +9,10 @@ import Button from "@mui/material/Button";
 import BoltIcon from "@mui/icons-material/Bolt";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import EditIcon from "@mui/icons-material/Edit";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import AddIcon from "@mui/icons-material/Add";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Delete from "@mui/icons-material/Delete";
+import SaveIcon from '@mui/icons-material/Save';
 import {
     CardActionArea,
     Checkbox,
@@ -39,7 +39,8 @@ export default function Combat() {
         delete: false,
         temporaryconfirm: false,
         donotconfirm: false,
-        save: false
+        save: false,
+        errorsave: false
     });
 
     function HandleClickOpen(thing) {
@@ -190,32 +191,40 @@ export default function Combat() {
                         variant="outlined"
                         size="small"
                         color="success"
-                        endIcon={<StarBorderIcon/>}
+                        endIcon={<SaveIcon/>}
                         fullWidth={isSmallScreen}
-                        onClick={() => HandleClickOpen("save")}
+                        onClick={selected ? () => HandleClickOpen("save"): null}
                     >Save Combatant</Button>
-                    <Dialog open={open["save"]} onClose={() => HandleClose("save")}
+                    <Dialog open={open["save"]} onClose={() => {HandleClose("save"); HandleClose("errorsave")}}
                         PaperProps={{ component: 'form',
                             onSubmit: (event) => {
                                 event.preventDefault();
                                 const formData = new FormData(event.currentTarget);
                                 const formJson = Object.fromEntries(formData.entries());
                                 let saved = localStorage.getItem('saved')
-                                if (!localStorage.getItem('saved')) {
-                                    localStorage.setItem('saved', [])
-                                    saved = localStorage.getItem('saved')
+                                if (!saved) {
+                                    localStorage.setItem('saved', JSON.stringify([]))
                                 }
-                                localStorage.setItem(saved.length, JSON.parse(selected))
-                                HandleClose("save");
+                                saved = JSON.parse(localStorage.getItem('saved'))
+                                if (saved.includes(formJson.name)) {
+                                    HandleClickOpen("errorsave")
+                                } else {
+                                    saved.push(formJson.name);
+                                    localStorage.setItem(formJson.name, selected)
+                                    localStorage.setItem("saved", JSON.stringify(saved))
+                                    console.log(saved)
+                                    HandleClose("errorsave")
+                                    HandleClose("save");
+                                }
                             },
                         }}
                     >
-                        <DialogTitle>New Combatant</DialogTitle>
+                        <DialogTitle>Save Combatant</DialogTitle>
                         <DialogContent>
-                            <TextField autoFocus required margin="dense" id="name" name="name" label="Name" type="string" fullWidth variant="standard"/>
+                            <TextField autoFocus required error={open["errorsave"]} margin="dense" id="name" name="name" label="Save as..." type="string" fullWidth variant="standard" helperText={open["errorsave"] ? "Combatant already exists.": ""}/>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={() => HandleClose("save")}>Cancel</Button>
+                            <Button onClick={() => {HandleClose("save"); HandleClose("errorsave")}}>Cancel</Button>
                             <Button type="submit">Create</Button>
                         </DialogActions>
                     </Dialog>
