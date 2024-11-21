@@ -13,20 +13,31 @@ import AddIcon from "@mui/icons-material/Add";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Delete from "@mui/icons-material/Delete";
 import SaveIcon from '@mui/icons-material/Save';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
+    ButtonGroup,
     CardActionArea,
     Checkbox,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    FormControlLabel,
+    FormControlLabel, FormGroup,
     TextField
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import {useState} from "react";
 
 export default function Combat() {
+    if (!localStorage.getItem('saved')) {
+        localStorage.setItem('saved', JSON.stringify([]))
+    }
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -40,8 +51,15 @@ export default function Combat() {
         temporaryconfirm: false,
         donotconfirm: false,
         save: false,
-        errorsave: false
+        errorsave: false,
+        newdrop: false,
+        newsaved: false,
+        anchorEl: React.useState<null | HTMLElement>null
     });
+
+    const [savechecked, setSavechecked] = React.useState([]);
+
+    {JSON.parse(localStorage.getItem('saved')).map((item, index) => (savechecked[index] = false))
 
     function HandleClickOpen(thing) {
         setOpen((prevOpen) => ({
@@ -201,11 +219,7 @@ export default function Combat() {
                                 event.preventDefault();
                                 const formData = new FormData(event.currentTarget);
                                 const formJson = Object.fromEntries(formData.entries());
-                                let saved = localStorage.getItem('saved')
-                                if (!saved) {
-                                    localStorage.setItem('saved', JSON.stringify([]))
-                                }
-                                saved = JSON.parse(localStorage.getItem('saved'))
+                                let saved = JSON.parse(localStorage.getItem('saved'))
                                 if (saved.includes(formJson.name)) {
                                     HandleClickOpen("errorsave")
                                 } else {
@@ -228,14 +242,66 @@ export default function Combat() {
                             <Button type="submit">Create</Button>
                         </DialogActions>
                     </Dialog>
-                    <Button
-                        variant="outlined"
-                        size="small"
-                        color="success"
-                        endIcon={<AddIcon/>}
-                        fullWidth={isSmallScreen}
-                        onClick={() => HandleClickOpen("new")}
-                    >New</Button>
+                    <ButtonGroup>
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            color="success"
+                            endIcon={<AddIcon/>}
+                            fullWidth={isSmallScreen}
+                            onClick={() => HandleClickOpen("new")}
+                        >New</Button>
+                        <Button
+                            size="small"
+                            aria-controls={open["newdrop"] ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open["newdrop"] ? 'true' : undefined}
+                            onClick={(event) => {HandleClickOpen("newdrop"); open["anchorEl"] = event.currentTarget}}
+                        ><ArrowDropDownIcon/></Button>
+                    </ButtonGroup>
+                    <Menu
+                        anchorEl={open["anchorEl"]}
+                        open={open["newdrop"]}
+                        onClose={() => HandleClose("newdrop")}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={() => {HandleClose("newdrop"); HandleClickOpen("newsaved")}}>From Save</MenuItem>
+                    </Menu>
+                    <Dialog open={open["newsaved"]} onClose={() => HandleClose("newsaved")}
+                            PaperProps={{ component: 'form',
+                                onSubmit: (event) => {
+                                    event.preventDefault();
+                                    const formData = new FormData(event.currentTarget);
+                                    const formJson = Object.fromEntries(formData.entries());
+                                    HandleClose("newsaved");
+                                },
+                            }}
+                    >
+                        <DialogTitle>New Combatant From Save</DialogTitle>
+                        <DialogContent>
+                            <FormGroup>
+                                {JSON.parse(localStorage.getItem('saved')).map((item, index) => (
+                                    <Checkbox
+                                        onClick={(event, checked) => {
+                                            let newsavechecked = [...savechecked]
+                                            newsavechecked[index] = event.target.checked;
+                                            console.log(newsavechecked)
+                                            setSavechecked(newsavechecked)
+                                            console.log(savechecked)
+                                        }}
+                                        checked={savechecked[index]}
+                                        label={item}
+                                    />
+                                ))}
+                            </FormGroup>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => HandleClose("newsaved")}>Cancel</Button>
+                            <Button type="submit">Create</Button>
+                        </DialogActions>
+                    </Dialog>
                     <Dialog open={open["new"]} onClose={() => HandleClose("new")}
                         PaperProps={{ component: 'form',
                             onSubmit: (event) => {
@@ -353,4 +419,4 @@ export default function Combat() {
             </Grid>
     </Box>
     )
-}
+}}
