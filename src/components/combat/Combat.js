@@ -38,6 +38,9 @@ export default function Combat() {
     if (!localStorage.getItem('saved')) {
         localStorage.setItem('saved', JSON.stringify([]))
     }
+
+    let [savechecked, setSavechecked] = useState([]);
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -57,23 +60,19 @@ export default function Combat() {
         anchorEl: React.useState<null | HTMLElement>null
     });
 
-    const [savechecked, setSavechecked] = React.useState([]);
-
-    {JSON.parse(localStorage.getItem('saved')).map((item, index) => (savechecked[index] = false))
-
     function HandleClickOpen(thing) {
         setOpen((prevOpen) => ({
             ...prevOpen,
             [thing]: true,
         }));
-    };
+    }
 
     function HandleClose(thing){
         setOpen((prevOpen) => ({
             ...prevOpen,
             [thing]: false,
         }));
-    };
+    }
 
     let [selected, setSelected] = React.useState(null);
 
@@ -224,7 +223,7 @@ export default function Combat() {
                                     HandleClickOpen("errorsave")
                                 } else {
                                     saved.push(formJson.name);
-                                    localStorage.setItem(formJson.name, selected)
+                                    localStorage.setItem(formJson.name, JSON.stringify(selected))
                                     localStorage.setItem("saved", JSON.stringify(saved))
                                     console.log(saved)
                                     HandleClose("errorsave")
@@ -267,14 +266,24 @@ export default function Combat() {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={() => {HandleClose("newdrop"); HandleClickOpen("newsaved")}}>From Save</MenuItem>
+                        <MenuItem onClick={() => {HandleClose("newdrop"); HandleClickOpen("newsaved"); setSavechecked([]);}}>From Save</MenuItem>
                     </Menu>
                     <Dialog open={open["newsaved"]} onClose={() => HandleClose("newsaved")}
                             PaperProps={{ component: 'form',
                                 onSubmit: (event) => {
                                     event.preventDefault();
-                                    const formData = new FormData(event.currentTarget);
-                                    const formJson = Object.fromEntries(formData.entries());
+                                    for (let thing in savechecked) {
+                                        console.log("Thing:")
+                                        console.log(savechecked)
+                                        if (savechecked[thing]) {
+                                            let saved = JSON.parse(localStorage.getItem('saved'))
+                                            console.log(saved)
+                                            console.log(saved[thing])
+                                            console.log(JSON.parse(localStorage.getItem(saved[thing])).name)
+                                            let character = JSON.parse(localStorage.getItem(JSON.parse(localStorage.getItem('saved'))[thing]));
+                                            new Combatant(character.name, character.max_health, character.armor)
+                                        }
+                                    }
                                     HandleClose("newsaved");
                                 },
                             }}
@@ -283,22 +292,24 @@ export default function Combat() {
                         <DialogContent>
                             <FormGroup>
                                 {JSON.parse(localStorage.getItem('saved')).map((item, index) => (
-                                    <Checkbox
-                                        onClick={(event, checked) => {
-                                            let newsavechecked = [...savechecked]
-                                            newsavechecked[index] = event.target.checked;
-                                            console.log(newsavechecked)
-                                            setSavechecked(newsavechecked)
-                                            console.log(savechecked)
-                                        }}
-                                        checked={savechecked[index]}
+                                    <FormControlLabel control={
+                                        <Checkbox
+                                            onClick={(event, checked) => {
+                                                setSavechecked((prevSavechecked) => ({
+                                                    ...prevSavechecked,
+                                                    [index]: event.target.checked
+                                                }));
+                                            }}
+                                            checked={savechecked[index]}
+                                        />
+                                        }
                                         label={item}
                                     />
                                 ))}
                             </FormGroup>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={() => HandleClose("newsaved")}>Cancel</Button>
+                            <Button onClick={() => {HandleClose("newsaved"); setSavechecked([])}}>Cancel</Button>
                             <Button type="submit">Create</Button>
                         </DialogActions>
                     </Dialog>
@@ -419,4 +430,4 @@ export default function Combat() {
             </Grid>
     </Box>
     )
-}}
+}
