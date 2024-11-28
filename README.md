@@ -3,7 +3,7 @@
         <summary>
             <h1 style="font-size: 50px">DM Helper</h1>
             <br>
-            <h2 style="margin-top: -20px">By Village10</h2>
+            <h2 style="margin-top: -40px">By Village10</h2>
         </summary>
     </ul>
 </div>
