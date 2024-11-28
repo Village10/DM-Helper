@@ -1,12 +1,16 @@
-<!-- markdownlint-disable-file MD001 MD033 -->
 <h1 align="center">DM Helper</h1>
-<h3 align="center">By Village10</h3>
+<h3 align="center" style="margin-top: -10px">By Village10</h3>
 
 <div align="center">
     <!-- release -->
-    <a href="https://github.com/Village10/DM-Helper/releases" target="_blank">
-        <img src="https://img.shields.io/github/v/release/Moulberry/NotEnoughUpdates-REPO?color=informational&include_prereleases&label=release&logo=github&logoColor=white" alt="release">
+    <a href="https://react.dev" target="_blank">
+        <img src="https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge" alt="release">
     </a>
+    <a href="https://github.com/Village10/DM-Helper/releases" target="_blank">
+        <img src="https://img.shields.io/github/v/release/Village10/DM-Helper?include_prereleases&style=for-the-badge" alt="release">
+    </a>
+    <img src="https://img.shields.io/github/repo-size/Village10/DM-Helper?include_prereleases&style=for-the-badge" alt="release">
+
 </div>
 
 DM Helper is a website built with react and MUI.
