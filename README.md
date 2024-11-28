@@ -1,8 +1,7 @@
-<div id="user-content-toc" style="margin-bottom: 75px">
+<div id="user-content-toc">
     <ul align="center" style="list-style: none;">
         <summary>
             <h1 style="font-size: 50px">DM Helper</h1>
-            <h2 style="margin: -25px" >By Village10</h2>
         </summary>
     </ul>
 </div>
