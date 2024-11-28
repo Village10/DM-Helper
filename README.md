@@ -1,5 +1,7 @@
-<h1 align="center">DM Helper</h1>
-<h3 align="center" style="margin-top: -10px">By Village10</h3>
+<div align="center">
+    <h1 >DM Helper</h1>
+    <h3 style="margin-top: -10px">By Village10</h3>
+</div>
 
 <div align="center">
     <!-- release -->
