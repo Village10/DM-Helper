@@ -1,9 +1,9 @@
 <div id="user-content-toc" style="margin-bottom: 40px">
     <ul align="center" style="list-style: none;">
         <summary>
-            <h1 style="font-size: 50px">DM Helper</h1>
+            <h1 style="font-size: 50px; margin-bottom: -15px">DM Helper</h1>
             <br>
-            <h2 style="margin-top: -60px">By Village10</h2>
+            <h2 style="margin-top: -15px">By Village10</h2>
         </summary>
     </ul>
 </div>
@@ -16,6 +16,6 @@
     <a href="https://nodejs.org/en" target="_blank"><img src="https://img.shields.io/badge/-NodeJs-5FA04E?logo=nodedotjs&logoColor=white&labelColor=black&style=for-the-badge" alt="release"></a>
     <br>
     <a href="https://github.com/Village10/DM-Helper/releases" target="_blank"><img src="https://img.shields.io/github/v/release/Village10/DM-Helper?include_prereleases&labelColor=black&style=for-the-badge" alt="release"></a>
-    <a href="https://DM-Helper.duckdns.org" target="_blank"><img src="https://img.shields.io/badge/Website-URL-ED1C24?&labelColor=black&style=for-the-badge" alt="release"></a>
+    <a href="https://DM-Helper.duckdns.org:3000" target="_blank"><img src="https://img.shields.io/badge/Website-URL-ED1C24?&labelColor=black&style=for-the-badge" alt="release"></a>
     <img src="https://img.shields.io/github/repo-size/Village10/DM-Helper?include_prereleases&labelColor=black&style=for-the-badge" alt="release">
 </div>
