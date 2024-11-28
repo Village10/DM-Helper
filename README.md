@@ -1,6 +1,6 @@
 <div align="center">
-    <h1 >DM Helper</h1>
-    <h3 style="margin-top: -10px">By Village10</h3>
+    <h1 >DM Helper<br><h3 style="margin-top: -10px">By Village10</h3></h1>
+    
 </div>
 
 <div align="center">
