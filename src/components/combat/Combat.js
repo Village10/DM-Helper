@@ -179,7 +179,7 @@ export default function Combat() {
                                 },
                             }}
                     >
-                        <DialogTitle>Damage Combatant</DialogTitle>
+                        <DialogTitle>Edit Combatant</DialogTitle>
                         <DialogContent>
                             <TextField autoFocus required margin="dense" id="name" name="name" label="Name" type="string" defaultValue={selected ? selected.name: null} fullWidth variant="standard"/>
                             <TextField autoFocus required margin="dense" id="health" name="health" label="Health" type="number" defaultValue={selected ? selected.health: null} fullWidth variant="standard"/>
@@ -225,7 +225,6 @@ export default function Combat() {
                                     saved.push(formJson.name);
                                     localStorage.setItem(formJson.name, JSON.stringify(selected))
                                     localStorage.setItem("saved", JSON.stringify(saved))
-                                    console.log(saved)
                                     HandleClose("errorsave")
                                     HandleClose("save");
                                 }
@@ -273,13 +272,7 @@ export default function Combat() {
                                 onSubmit: (event) => {
                                     event.preventDefault();
                                     for (let thing in savechecked) {
-                                        console.log("Thing:")
-                                        console.log(savechecked)
                                         if (savechecked[thing]) {
-                                            let saved = JSON.parse(localStorage.getItem('saved'))
-                                            console.log(saved)
-                                            console.log(saved[thing])
-                                            console.log(JSON.parse(localStorage.getItem(saved[thing])).name)
                                             let character = JSON.parse(localStorage.getItem(JSON.parse(localStorage.getItem('saved'))[thing]));
                                             new Combatant(character.name, character.max_health, character.armor)
                                         }
