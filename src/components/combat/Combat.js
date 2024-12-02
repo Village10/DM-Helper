@@ -32,7 +32,8 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import {useState} from "react";
+import {useRef, useState} from "react";
+import Divider from "@mui/material/Divider";
 
 export default function Combat() {
     if (!localStorage.getItem('saved')) {
@@ -57,7 +58,10 @@ export default function Combat() {
         errorsave: false,
         newdrop: false,
         newsaved: false,
-        anchorEl: React.useState<null | HTMLElement>null
+        newelement: React.createRef(),
+        deletedrop: false,
+        deletesaved: false,
+        deleteelement: React.createRef()
     });
 
     function HandleClickOpen(thing) {
@@ -244,21 +248,21 @@ export default function Combat() {
                         <Button
                             variant="outlined"
                             size="small"
-                            color="success"
                             endIcon={<AddIcon/>}
                             fullWidth={isSmallScreen}
                             onClick={() => HandleClickOpen("new")}
                         >New</Button>
                         <Button
+                            ref={open["newelement"]}
                             size="small"
                             aria-controls={open["newdrop"] ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open["newdrop"] ? 'true' : undefined}
-                            onClick={(event) => {HandleClickOpen("newdrop"); open["anchorEl"] = event.currentTarget}}
+                            onClick={(event) => HandleClickOpen("newdrop")}
                         ><ArrowDropDownIcon/></Button>
                     </ButtonGroup>
                     <Menu
-                        anchorEl={open["anchorEl"]}
+                        anchorEl={open["newelement"].current}
                         open={open["newdrop"]}
                         onClose={() => HandleClose("newdrop")}
                         MenuListProps={{
@@ -285,7 +289,9 @@ export default function Combat() {
                         <DialogContent>
                             <FormGroup>
                                 {JSON.parse(localStorage.getItem('saved')).map((item, index) => (
-                                    <FormControlLabel control={
+                                    <FormControlLabel
+                                        key={index}
+                                        control={
                                         <Checkbox
                                             onClick={(event, checked) => {
                                                 setSavechecked((prevSavechecked) => ({
@@ -328,23 +334,91 @@ export default function Combat() {
                             <Button type="submit">Create</Button>
                         </DialogActions>
                     </Dialog>
-                    <Button
-                        variant="contained"
+                    <ButtonGroup
                         size="small"
+                        variant="contained"
                         color="error"
-                        endIcon={<Delete/>}
-                        fullWidth={isSmallScreen}
-                        onClick={ () => { if (selected) {
-                                if (open["donotconfirm"]) {
-                                    let selected_place = Combatant.instances.indexOf(selected) - 1
-                                    Combatant.instances.splice(Combatant.instances.indexOf(selected), 1);
-                                    if (selected_place < 0) {setSelected(Combatant.instances[0])} else {setSelected(Combatant.instances[selected_place])}
-                                } else {
-                                    HandleClickOpen("delete")
+                    >
+                        <Button
+                            endIcon={<Delete/>}
+                            fullWidth={isSmallScreen}
+                            onClick={ () => { if (selected) {
+                                    if (open["donotconfirm"]) {
+                                        let selected_place = Combatant.instances.indexOf(selected) - 1
+                                        Combatant.instances.splice(Combatant.instances.indexOf(selected), 1);
+                                        if (selected_place < 0) {setSelected(Combatant.instances[0])} else {setSelected(Combatant.instances[selected_place])}
+                                    } else {
+                                        HandleClickOpen("delete")
+                                    }
                                 }
-                            }
+                            }}
+                        >Delete</Button>
+                        <Button
+                            ref={open["deleteelement"]}
+                            aria-controls={open["deletedrop"] ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open["deletedrop"] ? 'true' : undefined}
+                            onClick={(event) => HandleClickOpen("deletedrop")}
+                        ><ArrowDropDownIcon/></Button>
+                    </ButtonGroup>
+                    <Menu
+                        anchorEl={open["deleteelement"].current}
+                        open={open["deletedrop"]}
+                        onClose={() => HandleClose("deletedrop")}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
                         }}
-                    >Delete</Button>
+                    >
+                        <MenuItem onClick={() => {HandleClose("deletedrop"); if (selected) {HandleClickOpen("delete")}}}>Delete Selected</MenuItem>
+                        <MenuItem onClick={() => {HandleClose("deletedrop"); Combatant.instances = [];}}>Clear Combatants</MenuItem>
+                        <MenuItem onClick={() => {HandleClose("deletedrop"); HandleClickOpen("deletesaved"); setSavechecked([]);}}>Delete Saved</MenuItem>
+                        <MenuItem onClick={() => {HandleClose("deletedrop"); localStorage.clear()}}>Clear Saved</MenuItem>
+                    </Menu>
+                    <Dialog open={open["deletesaved"]} onClose={() => HandleClose("deletesaved")}
+                            PaperProps={{ component: 'form',
+                                onSubmit: (event) => {
+                                    event.preventDefault();
+                                    for (let thing in savechecked) {
+                                        if (savechecked[thing]) {
+                                            let saved = JSON.parse(localStorage.getItem('saved'))
+                                            let item = saved[thing]
+                                            localStorage.removeItem(item)
+                                            saved.splice(thing, 1)
+                                            console.log(saved)
+                                            localStorage.setItem('saved', JSON.stringify(saved))
+                                        }
+                                    }
+                                    HandleClose("deletesaved");
+                                },
+                            }}
+                    >
+                        <DialogTitle>Delete Saved Combatant(s)</DialogTitle>
+                        <DialogContent>
+                            <FormGroup>
+                                {JSON.parse(localStorage.getItem('saved')).map((item, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        control={
+                                            <Checkbox
+                                                onClick={(event, checked) => {
+                                                    setSavechecked((prevSavechecked) => ({
+                                                        ...prevSavechecked,
+                                                        [index]: event.target.checked
+                                                    }));
+                                                }}
+                                                checked={savechecked[index]}
+                                            />
+                                        }
+                                        label={item}
+                                    />
+                                ))}
+                            </FormGroup>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => {HandleClose("deletesaved"); setSavechecked([])}}>Cancel</Button>
+                            <Button type="submit">Delete</Button>
+                        </DialogActions>
+                    </Dialog>
                     <Dialog open={open["delete"]} onClose={() => HandleClose("delete")}
                             PaperProps={{ component: 'form',
                                 onSubmit: (event) => {
