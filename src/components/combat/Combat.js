@@ -111,7 +111,7 @@ export default function Combat() {
                     >
                         <DialogTitle>Damage Combatant</DialogTitle>
                         <DialogContent>
-                            <TextField autoFocus required margin="dense" id="damage" name="damage" label="Damage" type="number" fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="damage" name="damage" label="Damage" type="number" InputProps={{inputProps: { min: 0 }}} fullWidth variant="standard"/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => HandleClose("damage")}>Cancel</Button>
@@ -144,9 +144,9 @@ export default function Combat() {
                                 },
                             }}
                     >
-                        <DialogTitle>Damage Combatant</DialogTitle>
+                        <DialogTitle>Heal Combatant</DialogTitle>
                         <DialogContent>
-                            <TextField autoFocus required margin="dense" id="health" name="health" label="Health" type="number" fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="health" name="health" label="Health" type="number" InputProps={{inputProps: { min: 0 }}} fullWidth variant="standard"/>
                             <FormControlLabel control={<Checkbox checked={open["temporary"]} onClick={() => open["temporary"] ? HandleClose("temporary"):HandleClickOpen("temporary") } />} label="Temporary Health" />
                         </DialogContent>
                         <DialogActions>
@@ -182,13 +182,13 @@ export default function Combat() {
                         <DialogTitle>Edit Combatant</DialogTitle>
                         <DialogContent>
                             <TextField autoFocus required margin="dense" id="name" name="name" label="Name" type="string" defaultValue={selected ? selected.name: null} fullWidth variant="standard"/>
-                            <TextField autoFocus required margin="dense" id="health" name="health" label="Health" type="number" defaultValue={selected ? selected.health: null} fullWidth variant="standard"/>
-                            <TextField autoFocus required margin="dense" id="temp_health" name="temp_health" label="Temporary Health" defaultValue={selected ? selected.temp_health: null} type="number" fullWidth variant="standard"/>
-                            <TextField autoFocus required margin="dense" id="armor" name="armor" label="Armor Class" type="number" defaultValue={selected ? selected.armor: null} fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="health" name="health" label="Health" type="number" InputProps={{inputProps: { min: 0 }}} defaultValue={selected ? selected.health: null} fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="temp_health" name="temp_health" label="Temporary Health" InputProps={{inputProps: { min: 0 }}} defaultValue={selected ? selected.temp_health: null} type="number" fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="armor" name="armor" label="Armor Class" type="number" InputProps={{inputProps: { min: 0 }}} defaultValue={selected ? selected.armor: null} fullWidth variant="standard"/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => HandleClose("edit")}>Cancel</Button>
-                            <Button type="submit">Edit</Button>
+                            <Button type="submit">Done</Button>
                         </DialogActions>
                     </Dialog>
                     <Button
@@ -199,9 +199,10 @@ export default function Combat() {
                         fullWidth={isSmallScreen}
                         onClick={() => {if (selected) {
                             new Combatant(selected.name, selected.max_health, selected.armor);
-                            Combatant.instances[0].temp_health = selected.temp_health;
-                            Combatant.instances[0].health = selected.health;
-                            setSelected(Combatant.instances[Combatant.instances.length - 1])
+                            let duplicateindex = Combatant.instances.length - 1
+                            Combatant.instances[duplicateindex].temp_health = selected.temp_health;
+                            Combatant.instances[duplicateindex].health = selected.health;
+                            setSelected(Combatant.instances[duplicateindex])
                         }}}
                     >Duplicate</Button>
                     <Button
@@ -281,7 +282,7 @@ export default function Combat() {
                                 },
                             }}
                     >
-                        <DialogTitle>New Combatant From Save</DialogTitle>
+                        <DialogTitle>New Combatant(s) From Save</DialogTitle>
                         <DialogContent>
                             <FormGroup>
                                 {JSON.parse(localStorage.getItem('saved')).map((item, index) => (
@@ -322,8 +323,8 @@ export default function Combat() {
                         <DialogTitle>New Combatant</DialogTitle>
                         <DialogContent>
                             <TextField autoFocus required margin="dense" id="name" name="name" label="Name" type="string" fullWidth variant="standard"/>
-                            <TextField autoFocus required margin="dense" id="health" name="health" label="Max Health" type="number" fullWidth variant="standard"/>
-                            <TextField autoFocus required margin="dense" id="armor" name="armor" label="Armor Class" type="number" fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="health" name="health" label="Max Health" type="number" InputProps={{inputProps: { min: 0 }}} fullWidth variant="standard"/>
+                            <TextField autoFocus required margin="dense" id="armor" name="armor" label="Armor Class" type="number" InputProps={{inputProps: { min: 0 }}} fullWidth variant="standard"/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => HandleClose("new")}>Cancel</Button>
@@ -366,7 +367,7 @@ export default function Combat() {
                         }}
                     >
                         <MenuItem onClick={() => {HandleClose("deletedrop"); if (selected) {HandleClickOpen("delete")}}}>Delete Selected</MenuItem>
-                        <MenuItem onClick={() => {HandleClose("deletedrop"); Combatant.instances = [];}}>Clear Combatants</MenuItem>
+                        <MenuItem onClick={() => {HandleClose("deletedrop"); Combatant.instances = []; setSelected(null)}}>Clear Combatants</MenuItem>
                         <MenuItem onClick={() => {HandleClose("deletedrop"); HandleClickOpen("deletesaved"); setSavechecked([]);}}>Delete Saved</MenuItem>
                         <MenuItem onClick={() => {HandleClose("deletedrop"); localStorage.clear()}}>Clear Saved</MenuItem>
                     </Menu>
