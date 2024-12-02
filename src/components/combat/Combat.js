@@ -29,11 +29,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import {useRef, useState} from "react";
-import Divider from "@mui/material/Divider";
+import {useState} from "react";
 
 export default function Combat() {
     if (!localStorage.getItem('saved')) {
@@ -258,7 +254,7 @@ export default function Combat() {
                             aria-controls={open["newdrop"] ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open["newdrop"] ? 'true' : undefined}
-                            onClick={(event) => HandleClickOpen("newdrop")}
+                            onClick={() => HandleClickOpen("newdrop")}
                         ><ArrowDropDownIcon/></Button>
                     </ButtonGroup>
                     <Menu
@@ -293,7 +289,7 @@ export default function Combat() {
                                         key={index}
                                         control={
                                         <Checkbox
-                                            onClick={(event, checked) => {
+                                            onClick={(event) => {
                                                 setSavechecked((prevSavechecked) => ({
                                                     ...prevSavechecked,
                                                     [index]: event.target.checked
@@ -358,7 +354,7 @@ export default function Combat() {
                             aria-controls={open["deletedrop"] ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open["deletedrop"] ? 'true' : undefined}
-                            onClick={(event) => HandleClickOpen("deletedrop")}
+                            onClick={() => HandleClickOpen("deletedrop")}
                         ><ArrowDropDownIcon/></Button>
                     </ButtonGroup>
                     <Menu
@@ -400,7 +396,7 @@ export default function Combat() {
                                         key={index}
                                         control={
                                             <Checkbox
-                                                onClick={(event, checked) => {
+                                                onClick={(event) => {
                                                     setSavechecked((prevSavechecked) => ({
                                                         ...prevSavechecked,
                                                         [index]: event.target.checked
