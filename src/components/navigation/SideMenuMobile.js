@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import MenuContent from './MenuContent';
 import titleimage from "../../images/favicon.ico";
 
-export default function SideMenuMobile({ open, toggleDrawer }) {
+export default function SideMenuMobile({ open, toggleDrawer, tab, setTab }) {
     return (
         <Drawer
             anchor="right"
@@ -36,7 +36,7 @@ export default function SideMenuMobile({ open, toggleDrawer }) {
                     <img src={titleimage} alt="Logo" style={{width: '60%', padding: '20px'}}/>
                 </Stack>
                 <Stack sx={{flexGrow: 1}}>
-                    <MenuContent/>
+                    <MenuContent setTab={setTab} tab={tab} />
                     <Divider/>
                 </Stack>
             </Stack>

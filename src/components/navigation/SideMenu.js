@@ -17,7 +17,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu() {
+export default function SideMenu({ tab, setTab }) {
   return (
       <Drawer
           variant="permanent"
@@ -29,7 +29,7 @@ export default function SideMenu() {
           }}
       >
           <img src={titleimage} alt="Logo" style={{ width: '100%', padding: '50px' }} />
-          <MenuContent/>
+          <MenuContent tab={tab} setTab={setTab} />
       </Drawer>
   );
 }

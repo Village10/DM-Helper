@@ -10,9 +10,13 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import SearchIcon from '@mui/icons-material/Search';
+import MapIcon from '@mui/icons-material/Map';
+import PersonIcon from '@mui/icons-material/Person';
 
 const mainListItems = [
   { text: 'Combat', icon: <LocalFireDepartmentIcon /> },
+  { text: 'Characters', icon: <PersonIcon /> },
+  { text: 'Maps', icon: <MapIcon /> },
   { text: 'Notes', icon: <EditNoteIcon /> },
   { text: 'Search', icon: <SearchIcon /> },
 ];
@@ -22,24 +26,24 @@ const secondaryListItems = [
   { text: 'About', icon: <InfoRoundedIcon /> },
 ];
 
-export default function MenuContent() {
+export default function MenuContent({ tab, setTab }) {
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={index === 0}>
+            <ListItemButton selected={index === ["Combat", "Characters", "Maps", "Notes", "Search", "Settings", "About"].indexOf(tab)}  onClick={() => setTab(item.text)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-
       <List dense>
         {secondaryListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
+            <ListItemButton selected={index === ["Combat", "Characters", "Maps", "Notes", "Search", "Settings", "About"].indexOf(tab) - 5} onClick={() => setTab(item.text)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>

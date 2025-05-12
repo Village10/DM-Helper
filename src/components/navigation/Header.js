@@ -2,8 +2,9 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import NavbarBreadcrumbs from './NavbarBreadcrumbs';
 import ColorModeIconDropdown from "../../shared-theme/ColorModeIconDropdown";
+import AccountButton from "./AccountButton";
 
-export default function Header() {
+export default function Header({ tab, setTab }) {
   return (
     <Stack
       direction="row"
@@ -17,9 +18,10 @@ export default function Header() {
       }}
       spacing={2}
     >
-      <NavbarBreadcrumbs />
+      <NavbarBreadcrumbs tab={tab} />
       <Stack direction="row" sx={{ gap: 1 }}>
         <ColorModeIconDropdown />
+        <AccountButton setTab={setTab} tab={tab}/>
       </Stack>
     </Stack>
   );

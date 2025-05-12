@@ -17,3 +17,8 @@
     <a href="https://DM-Helper.duckdns.org:3000" target="_blank"><img src="https://img.shields.io/badge/Website-URL-green?&labelColor=black&style=for-the-badge" alt="release"></a>
     <img src="https://img.shields.io/github/repo-size/Village10/DM-Helper?include_prereleases&labelColor=black&style=for-the-badge" alt="release">
 </div>
+
+### To do:
+- Add Maps tab
+- Store in firebase using google account
+  - Make account button
