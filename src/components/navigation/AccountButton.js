@@ -47,6 +47,7 @@ export default function ProfileButton({setTab, tab}) {
                         });
                         setTab("Update" + tab)
                     } else {
+                        console.log("Saving Data")
                         const localStorageData = {...localStorage};
                         await setDoc(userDocRef, {localStorageData});
                         setTab("Update" + tab)

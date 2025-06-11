@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCPpNs0m6R8CBpSNig6yHXx-z5MjICi70E",
-    authDomain: "dndhelper5e.firebaseapp.com",
-    projectId: "dndhelper5e",
-    storageBucket: "dndhelper5e.firebasestorage.app",
-    messagingSenderId: "443983293394",
-    appId: "1:443983293394:web:d9641a406e16c53a09b60b",
-    measurementId: "G-HFR4YTPC0D"
+    apiKey: "AIzaSyDznXtLv8nRBOSIR6f7zapBtLcznEwYFQQ",
+    authDomain: "dmhelper5e.firebaseapp.com",
+    projectId: "dmhelper5e",
+    storageBucket: "dmhelper5e.firebasestorage.app",
+    messagingSenderId: "470156282399",
+    appId: "1:470156282399:web:c1b55022686bf8e955232a",
+    measurementId: "G-1CS83X3L84"
 };
 
 const app = initializeApp(firebaseConfig);
