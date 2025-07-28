@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid2";
 import {Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel} from "@mui/material";
 import Switch from '@mui/material/Switch';
 
-export default function Settings() {
+export default function Settings(props) {
 
     const [reRender, setReRender] = React.useState(false);
     const [openDelete, setOpenDelete] = React.useState(false);
@@ -25,6 +25,7 @@ export default function Settings() {
         )
     }
 
+    // ToDo: Add confirmation for clearing all data
     return (
         <Box sx={{width: "100%"}}>
             <Typography variant="h1" align="center" style={{marginBottom: 20}}>Settings</Typography>
@@ -63,7 +64,9 @@ export default function Settings() {
                         variant="contained"
                         color="success"
                         onClick={async () => {
-                            Storage("set", await SearchWiki(), "wikiData")
+                            const wikiData = await SearchWiki()
+                            Storage("set", wikiData, "wikiData")
+                            props.setWikiData(wikiData)
                         }}
                     >Refresh Data From Wiki</Button>
                 </Grid>

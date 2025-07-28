@@ -28,7 +28,7 @@ export default function DeleteButton({selected, setSelected}) {
     const [openDelete, setOpenDelete] = React.useState(false);
     const [deleteDrop, setDeleteDrop] = React.useState(false);
     const [openDeleteSaved, setOpenDeleteSaved] = React.useState(false);
-    const drop = React.useRef(React.createRef());
+    const drop = React.useRef();
     const [saveChecked, setSaveChecked] = React.useState([]);
     const [temporaryConfirm, setTemporaryConfirm] = React.useState(false);
 

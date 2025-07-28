@@ -20,5 +20,3 @@
 
 ### To do:
 - Add Maps tab
-- Store in firebase using google account
-  - Make account button

@@ -1,58 +1,74 @@
-
 export default function Storage(action, value, main, secondary) {
-    if (action === "set") {
-        if (secondary) {
-            let original = JSON.parse(localStorage.getItem(main));
-            original[secondary] = value;
-            console.log(original);
-            localStorage.setItem(main, JSON.stringify(original));
-        } else {
-            localStorage.setItem(main, JSON.stringify(value));
-        }
-    } else if (action === "get") {
-        if (localStorage.getItem(main)) {
+    let item = localStorage.getItem(main);
+    switch (action) {
+        case "set":
             if (secondary) {
-                return JSON.parse(localStorage.getItem(main))[secondary];
+                let original = JSON.parse(item);
+                original[secondary] = value;
+                localStorage.setItem(main, JSON.stringify(original));
             } else {
-                return JSON.parse(localStorage.getItem(main));
+                localStorage.setItem(main, JSON.stringify(value));
             }
-        }
-    } else if (action === "push") {
-        if (secondary) {
-            let original = JSON.parse(localStorage.getItem(main))[secondary];
-            let pushed = original[secondary]
-            pushed.push(value);
-            localStorage.setItem(main, JSON.stringify(pushed))
-        } else {
-            let original = JSON.parse(localStorage.getItem(main));
-            original.push(value);
-            localStorage.setItem(main, JSON.stringify(original));
-        }
-    } else if (action === "delete") {
-        if (secondary) {
-            let original = JSON.parse(localStorage.getItem(main));
-            delete original[secondary]
-            localStorage.setItem(main, JSON.stringify(original));
-        } else {
-            localStorage.removeItem(main)
-        }
-    } else if (action === "createIfNeeded") {
-        if (localStorage.getItem(main)) {
-            if (secondary) {
-                if (!Object.keys(JSON.parse(localStorage.getItem(main))).includes(secondary)) {
-                    let original = JSON.parse(localStorage.getItem(main));
-                    original[secondary] = value;
-                    localStorage.setItem(main, JSON.stringify(original))
+            break;
+
+        case "get":
+            if (item) {
+                if (secondary) {
+                    return JSON.parse(item)[secondary];
+                } else {
+                    return JSON.parse(item);
                 }
             }
-        } else {
+            break;
+
+        case "push":
             if (secondary) {
-                localStorage.setItem(main, JSON.stringify({
-                    [secondary]: value
-                }))
+                if (item) {
+                    let original = JSON.parse(item);
+                    original[secondary].push(value);
+                    localStorage.setItem(main, JSON.stringify(original));
+                }
             } else {
-                localStorage.setItem(main, JSON.stringify(value))
+                let original = JSON.parse(item);
+                original.push(value);
+                localStorage.setItem(main, JSON.stringify(original));
             }
-        }
+            break;
+
+        case "delete":
+            if (secondary) {
+                if (item) {
+                    let original = JSON.parse(item);
+                    delete original[secondary];
+                    localStorage.setItem(main, JSON.stringify(original));
+                }
+            } else {
+                localStorage.removeItem(main);
+            }
+            break;
+
+        case "createIfNeeded":
+            if (item) {
+                if (secondary) {
+                    if (!Object.keys(JSON.parse(item)).includes(secondary)) {
+                        let original = JSON.parse(item);
+                        original[secondary] = value;
+                        localStorage.setItem(main, JSON.stringify(original));
+                    }
+                }
+            } else {
+                if (secondary) {
+                    localStorage.setItem(main, JSON.stringify({
+                        [secondary]: value
+                    }));
+                } else {
+                    localStorage.setItem(main, JSON.stringify(value));
+                }
+            }
+            break;
+
+        default:
+            console.warn(`Unknown Storage action: ${action}`);
+            break;
     }
 }

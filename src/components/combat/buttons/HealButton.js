@@ -35,8 +35,6 @@ export default function DamageButton({selected, setSelected}) {
                                 instances.at(instances.findIndex(obj => obj.id === selected.id)).temp_health = parseInt(formJson.health)
                             }
                             else {
-                                console.log(instances.at(index).health)
-                                console.log(instances.at(index).max_health)
                                 instances.at(index).health = Math.max(Math.min(instances.at(index).health + parseInt(formJson.health), instances.at(index).max_health), 0)
                             }
                             Storage("set", instances, "Combat")

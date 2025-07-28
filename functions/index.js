@@ -3,7 +3,7 @@ import getMonsters from "./getwikidata/getMonsters.js";
 import getWikiPages from "./getwikidata/getWikiPages.js";
 import getWikiPage from "./getwikidata/getWikiPage.js";
 import getMonster from "./getwikidata/getMonster.js";
-import { processBatches, toStorable } from "../src/util/Misc.js";
+import { processBatches, toStorable } from "./utils/misc.js";
 import { db } from "./utils/firebase.js";
 
 export const getWikiData = onSchedule(

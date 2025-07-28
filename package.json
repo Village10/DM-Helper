@@ -16,15 +16,14 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.7.9",
     "cheerio": "^1.0.0",
     "dayjs": "^1.11.13",
     "firebase": "^11.7.1",
+    "firebase-tools": "^14.11.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native": "^0.76.2",
     "react-native-mmkv": "^3.1.0",
-    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -52,6 +51,8 @@
     ]
   },
   "devDependencies": {
-    "@react-native-community/cli": "^15.1.2"
+    "@react-native-community/cli": "^15.1.2",
+    "eslint-config-react-app": "^7.0.1",
+    "react-scripts": "^5.0.1"
   }
 }

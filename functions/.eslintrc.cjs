@@ -12,7 +12,12 @@ module.exports = {
   ],
   rules: {
     "no-restricted-globals": ["error", "name", "length"],
+    "max-len": ["error", { "code": 110 }],
+    "object-curly-spacing": ["error", "always"],
+    "linebreak-style": ["error", "windows"],
     "prefer-arrow-callback": "error",
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
     "quotes": ["error", "double", {"allowTemplateLiterals": true}],
   },
   overrides: [

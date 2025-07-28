@@ -13,11 +13,13 @@ export default function ProfileButton({setTab, tab}) {
     const [openMenu, setOpenMenu] = React.useState(false);
     const menuAnchor = React.useRef(React.createRef());
 
+    // ToDo: Move to bottom of sidebar
+
     useEffect(() => {
         const auth = getAuth();
 
         // Set up the listener for authentication state changes
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (_user) => {
             setUpdate((prev) => !prev);
         });
         setUpdate((prev) => !prev);
@@ -47,7 +49,7 @@ export default function ProfileButton({setTab, tab}) {
                         });
                         setTab("Update" + tab)
                     } else {
-                        console.log("Saving Data")
+                        // ToDo: Add popup confirmation message
                         const localStorageData = {...localStorage};
                         await setDoc(userDocRef, {localStorageData});
                         setTab("Update" + tab)

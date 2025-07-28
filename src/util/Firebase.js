@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
+import {getFunctions, httpsCallable} from "firebase/functions";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDznXtLv8nRBOSIR6f7zapBtLcznEwYFQQ",
@@ -14,13 +15,19 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let analytics = null;
 export const auth = getAuth(app);
+const functions = getFunctions(app);
+export const getHTML = httpsCallable(functions, "getHTML")
 export const provider = new GoogleAuthProvider();
 export const db = getFirestore(app);
 export let user = null;
 
+if (typeof window !== 'undefined') {
+    const { getAnalytics } = await import('firebase/analytics');
+    analytics = getAnalytics(app);
+}
+
 onAuthStateChanged(auth, (userAuth) => {
     user = userAuth;
-    console.log("User state changed:", user);
 });

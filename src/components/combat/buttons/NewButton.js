@@ -30,7 +30,7 @@ export default function NewButton({selected, setSelected}) {
     const [openDrop, setOpenDrop] = React.useState(false);
     const [openSaved, setOpenSaved] = React.useState(false);
     const [openCharacter, setOpenCharacter] = React.useState(false);
-    const drop = React.useRef(React.createRef());
+    const drop = React.useRef();
     let [saveChecked, setSaveChecked] = useState([]);
 
     return (

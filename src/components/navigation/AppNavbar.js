@@ -65,8 +65,8 @@ export default function AppNavbar({tab, setTab}) {
             </Stack>
             <ColorModeIconDropdown data-screenshot=""/>
             <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
-            <MenuRoundedIcon />
-          </MenuButton>
+                <MenuRoundedIcon />
+            </MenuButton>
           <SideMenuMobile open={open} toggleDrawer={toggleDrawer} setTab={setTab} tab={tab} />
         </Stack>
       </Toolbar>
