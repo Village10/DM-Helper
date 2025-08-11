@@ -3,18 +3,15 @@ import Button from "@mui/material/Button";
 import * as React from "react";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Storage from "../../../util/Storage";
+import storage from "../../../util/storage";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 
 
-export default function TurnButton({selected, setSelected}) {
+export default function TurnButton({setSelected, combatants}) {
 
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    
     const [openTurn, setOpenTurn] = React.useState(false);
 
     return (
@@ -24,14 +21,14 @@ export default function TurnButton({selected, setSelected}) {
                     size="small"
                     sx={{marginRight: 0}}
                     onClick={() => {
-                        const turn = Storage("get", "", "Turn")
+                        const turn = storage("get", "", "Turn")
                         if (turn > 1) {
-                            Storage("set", turn - 1, "Turn")
-                            setSelected(Storage("get", "", "Combat").sort((a, b) => {
+                            storage("set", turn - 1, "Turn")
+                            setSelected(combatants.sort((a, b) => {
                                 if (!a.initiative) return 1
                                 if (!b.initiative) return -1
                                 return b.initiative - a.initiative
-                            }).at((turn - 2) % Storage("get", "", "Combat").length))
+                            }).at((turn - 2) % combatants.length))
                         }
                     }}
                 ><KeyboardArrowLeftIcon/></IconButton>
@@ -39,20 +36,19 @@ export default function TurnButton({selected, setSelected}) {
                     variant="outlined"
                     sx={{margin: 0}}
                     size="small"
-                    fullWidth={isSmallScreen}
                     onClick={() => setOpenTurn(true)}
-                >Turn: {Storage("get", "", "Turn")}</Button>
+                >Turn: {storage("get", "", "Turn")}</Button>
                 <IconButton
                     size="small"
                     sx={{marginLeft: 0}}
                     onClick={() => {
-                        const turn = Storage("get", "", "Turn")
-                        Storage("set", turn + 1, "Turn")
-                        setSelected(Storage("get", "", "Combat").sort((a, b) => {
+                        const turn = storage("get", "", "Turn")
+                        storage("set", turn + 1, "Turn")
+                        setSelected(combatants.sort((a, b) => {
                             if (!a.initiative) return 1
                             if (!b.initiative) return -1
                             return b.initiative - a.initiative
-                        }).at((turn) % Storage("get", "", "Combat").length))
+                        }).at((turn) % combatants.length))
                     }}
                 ><KeyboardArrowRightIcon/></IconButton>
             </Stack>
@@ -61,12 +57,12 @@ export default function TurnButton({selected, setSelected}) {
                         onSubmit: (event) => {
                             event.preventDefault();
                             const formData = new FormData(event.currentTarget);
-                            Storage("set", parseInt(Object.fromEntries(formData.entries()).turn), "Turn")
-                            setSelected(Storage("get", "", "Combat").sort((a, b) => {
+                            storage("set", parseInt(Object.fromEntries(formData.entries()).turn), "Turn")
+                            setSelected(storage("get", "", "Combat").sort((a, b) => {
                                 if (!a.initiative) return 1
                                 if (!b.initiative) return -1
                                 return b.initiative - a.initiative
-                            }).at((Storage("get", "", "Turn") - 1) % Storage("get", "", "Combat").length))
+                            }).at((storage("get", "", "Turn") - 1) % combatants.length))
                             setOpenTurn(false);
                         },
                     }}

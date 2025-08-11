@@ -5,7 +5,6 @@ export default async function getWikiPage(link) {
   try {
     const res = await axiosCall("http://dnd2024.wikidot.com" + link.url);
 
-
     const cheerioData = cheerio.load(res.data);
 
     // Remove breadcrumbs

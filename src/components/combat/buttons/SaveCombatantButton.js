@@ -2,14 +2,9 @@ import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
-import {useTheme} from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Storage from "../../../util/Storage"
+import storage from "../../../util/storage"
 
 export default function SaveCombatantButton({selected}) {
-    
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     
     const [openSave, setOpenSave] = React.useState(false);
     const [error, setError] = React.useState(false);
@@ -21,7 +16,6 @@ export default function SaveCombatantButton({selected}) {
                 size="small"
                 color="success"
                 endIcon={<SaveIcon/>}
-                fullWidth={isSmallScreen}
                 onClick={selected ? () => setOpenSave(true): null}
             >Save Combatant</Button>
             <Dialog open={openSave} onClose={() => {setOpenSave(false); setError(false)}}
@@ -30,11 +24,11 @@ export default function SaveCombatantButton({selected}) {
                             event.preventDefault()
                             const formData = new FormData(event.currentTarget)
                             const formJson = Object.fromEntries(formData.entries())
-                            let saved = Storage("get", "", "Combatants")
+                            let saved = storage("get", "", "Combatants")
                             if (Object.keys(saved).includes(formJson.name)) {
                                 setError(true)
                             } else {
-                                Storage("set", selected, "Combatants", formJson.name)
+                                storage("set", selected, "Combatants", formJson.name)
                                 setOpenSave(false)
                                 setError(false)
                             }
@@ -47,7 +41,7 @@ export default function SaveCombatantButton({selected}) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => {setOpenSave(false); setError(false)}}>Cancel</Button>
-                    <Button type="submit">Create</Button>
+                    <Button type="submit">Save</Button>
                 </DialogActions>
             </Dialog>
         </>

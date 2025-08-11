@@ -82,11 +82,6 @@ export default async function getMonster(monster) {
     // Add "Source:" to sources
     cheerioData(".source").prepend("<Strong>Source: </Strong>");
 
-    // Set width to 75% and center
-    cheerioData.root().wrapInner(
-        "<div style=\"width: 75%; margin: 0 auto;\" ></div>",
-    );
-
     // Convert links to text
     cheerioData("a").each((index, element) => {
       cheerioData(element).replaceWith(cheerioData(element).text());

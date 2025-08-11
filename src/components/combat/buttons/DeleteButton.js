@@ -18,13 +18,10 @@ import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useState} from "react";
 import {useTheme} from "@mui/material/styles";
-import Storage from "../../../util/Storage"
+import storage from "../../../util/storage"
+import Divider from "@mui/material/Divider";
 
-export default function DeleteButton({selected, setSelected}) {
-
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+export default function DeleteButton({selected, setSelected, combatants, setCombatants}) {
     const [openDelete, setOpenDelete] = React.useState(false);
     const [deleteDrop, setDeleteDrop] = React.useState(false);
     const [openDeleteSaved, setOpenDeleteSaved] = React.useState(false);
@@ -34,14 +31,14 @@ export default function DeleteButton({selected, setSelected}) {
 
     function handleDelete(popup) {
         if (selected) {
-            if (Storage("get", "", "Confirm", "deleting a combatant") && popup) {
+            if (storage("get", "", "Confirm", "deleting a combatant") && popup) {
                 setOpenDelete(true)
             } else {
-                let instances = Storage("get", "", "Combat")
+                let instances = combatants
                 let selected_place = instances.findIndex(item => item.id === selected.id);
                 instances.splice(selected_place, 1);
                 setSelected(instances[Math.max(Math.min(selected_place, instances.length - 1), 0)])
-                Storage("set", instances, "Combat")
+                setCombatants(instances)
             }
         }
     }
@@ -55,7 +52,6 @@ export default function DeleteButton({selected, setSelected}) {
             >
                 <Button
                     endIcon={<Delete/>}
-                    fullWidth={isSmallScreen}
                     onClick={ () => {handleDelete(true)}}
                 >Delete</Button>
                 <Button
@@ -76,9 +72,10 @@ export default function DeleteButton({selected, setSelected}) {
                 }}
             >
                 <MenuItem onClick={() => {setDeleteDrop(false); handleDelete(true)}}>Delete Selected</MenuItem>
-                <MenuItem onClick={() => {setDeleteDrop(false); Storage("set", [], "Combat"); setSelected(null)}}>Clear Combatants</MenuItem>
                 <MenuItem onClick={() => {setDeleteDrop(false); setOpenDeleteSaved(true); setSaveChecked([]);}}>Delete Saved</MenuItem>
-                <MenuItem onClick={() => {setDeleteDrop(false); Storage("set", {}, "Combatants")}}>Clear Saved</MenuItem>
+                <Divider/>
+                <MenuItem onClick={() => {setDeleteDrop(false); setCombatants([]); setSelected(null)}}>Clear Combatants</MenuItem>
+                <MenuItem onClick={() => {setDeleteDrop(false); storage("set", {}, "Combatants")}}>Clear Saved</MenuItem>
             </Menu>
             <Dialog open={openDeleteSaved} onClose={() => setOpenDeleteSaved(false)}
                     PaperProps={{ component: 'form',
@@ -86,7 +83,7 @@ export default function DeleteButton({selected, setSelected}) {
                             event.preventDefault();
                             for (let thing in saveChecked) {
                                 if (saveChecked[thing]) {
-                                    Storage("delete", "", "Combatants", thing)
+                                    storage("delete", "", "Combatants", thing)
                                 }
                             }
                             setOpenDeleteSaved(false)
@@ -96,7 +93,7 @@ export default function DeleteButton({selected, setSelected}) {
                 <DialogTitle>Delete Saved Combatant(s)</DialogTitle>
                 <DialogContent>
                     <FormGroup>
-                        {Object.keys(Storage("get", "", "Combatants")).map((key) => (
+                        {Object.keys(storage("get", "", "Combatants")).map((key) => (
                             <FormControlLabel
                                 key={key}
                                 control={
@@ -125,7 +122,7 @@ export default function DeleteButton({selected, setSelected}) {
                         onSubmit: (event) => {
                             event.preventDefault()
                             if (temporaryConfirm) {
-                                Storage("set", false, "Confirm", "deleting a combatant")
+                                storage("set", false, "Confirm", "deleting a combatant")
                                 setTemporaryConfirm(false)
                             }
                             handleDelete(false)

@@ -4,13 +4,9 @@ import Button from "@mui/material/Button";
 import BoltIcon from "@mui/icons-material/Bolt";
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
-import Storage from "../../../util/Storage";
+import storage from "../../../util/storage";
 
-export default function DamageButton({selected, setSelected}) {
-
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    
+export default function DamageButton({selected, setSelected, combatants, setCombatants}) {
     const [openDamage, setOpenDamage] = React.useState(false)
     
     return (
@@ -20,13 +16,12 @@ export default function DamageButton({selected, setSelected}) {
                 size="small"
                 color="primary"
                 endIcon={<BoltIcon/>}
-                fullWidth={isSmallScreen}
                 onClick={selected ? () => setOpenDamage(true) : null}
             >Damage</Button>
             <Dialog open={openDamage} onClose={() => setOpenDamage(false)}
                     PaperProps={{ component: 'form',
                         onSubmit: (event) => {
-                            let instances = Storage("get", "", "Combat")
+                            let instances = combatants
                             let instance = instances.at(instances.findIndex(obj => obj.id === selected.id))
                             event.preventDefault();
                             const formData = new FormData(event.currentTarget);
@@ -38,10 +33,10 @@ export default function DamageButton({selected, setSelected}) {
                                 damage -= instance.temp_health;
                                 instance.temp_health = 0;
                             }
-                            instance.health = Math.max(instance.health - damage, 0)
-                            instances[instances.findIndex(obj => obj.id === selected.id)] = instance
-                            Storage("set", instances, "Combat")
-                            setSelected(null)
+                            instance.health = Math.max(instance.health - damage, 0);
+                            instances[instances.findIndex(obj => obj.id === selected.id)] = instance;
+                            setCombatants(instances);
+                            setSelected(null);
                             setOpenDamage(false);
                         },
                     }}

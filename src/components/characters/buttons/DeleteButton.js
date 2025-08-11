@@ -18,7 +18,7 @@ import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useState} from "react";
 import {useTheme} from "@mui/material/styles";
-import Storage from "../../../util/Storage"
+import storage from "../../../util/storage"
 
 export default function DeleteButton({selected, setSelected}) {
 
@@ -30,14 +30,14 @@ export default function DeleteButton({selected, setSelected}) {
 
     function handleDelete(popup) {
         if (selected) {
-            if (Storage("get", "", "Confirm", "deleting a character") && popup) {
+            if (storage("get", "", "Confirm", "deleting a character") && popup) {
                 setOpenDelete(true)
             } else {
-                let instances = Storage("get", "", "Characters")
+                let instances = storage("get", "", "Characters")
                 let selected_place = instances.findIndex(item => item.id === selected.id);
                 instances.splice(selected_place, 1);
                 setSelected(instances[Math.max(Math.min(selected_place, instances.length - 1), 0)])
-                Storage("set", instances, "Characters")
+                storage("set", instances, "Characters")
             }
         }
     }
@@ -57,7 +57,7 @@ export default function DeleteButton({selected, setSelected}) {
                         onSubmit: (event) => {
                             event.preventDefault()
                             if (temporaryConfirm) {
-                                Storage("set", false, "Confirm", "deleting a character")
+                                storage("set", false, "Confirm", "deleting a character")
                                 setTemporaryConfirm(false)
                             }
                             handleDelete(false)

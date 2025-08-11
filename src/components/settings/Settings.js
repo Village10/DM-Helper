@@ -2,17 +2,15 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Storage from "../../util/Storage"
+import storage from "../../util/storage"
 import SearchWiki from "../search/SearchWiki";
 import Grid from "@mui/material/Grid2";
-import {Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel} from "@mui/material";
+import {FormControlLabel} from "@mui/material";
 import Switch from '@mui/material/Switch';
 
 export default function Settings(props) {
 
     const [reRender, setReRender] = React.useState(false);
-    const [openDelete, setOpenDelete] = React.useState(false);
-    const [temporaryConfirm, setTemporaryConfirm] = React.useState(false);
 
     function settingsTitle(title) {
         return (
@@ -25,7 +23,7 @@ export default function Settings(props) {
         )
     }
 
-    // ToDo: Add confirmation for clearing all data
+    // TODO: Add confirmation for clearing all data
     return (
         <Box sx={{width: "100%"}}>
             <Typography variant="h1" align="center" style={{marginBottom: 20}}>Settings</Typography>
@@ -39,7 +37,7 @@ export default function Settings(props) {
                         variant="contained"
                         color="error"
                         onClick={async () => {
-                            Storage("delete", "", "Combatants")
+                            storage("delete", "", "Combatants")
                         }}
                     >Clear Saved Combatants</Button>
                     {settingsTitle("Characters")}
@@ -47,7 +45,7 @@ export default function Settings(props) {
                         variant="contained"
                         color="error"
                         onClick={async () => {
-                            Storage("delete", "", "Characters")
+                            storage("delete", "", "Characters")
                         }}
                     >Clear Characters</Button>
                     {settingsTitle("Notes")}
@@ -55,8 +53,8 @@ export default function Settings(props) {
                         variant="contained"
                         color="error"
                         onClick={async () => {
-                            Storage("delete", "", "Notes")
-                            Storage("set", "None", "Note")
+                            storage("delete", "", "Notes")
+                            storage("set", "None", "Note")
                         }}
                     >Clear Notes</Button>
                     {settingsTitle("Search")}
@@ -65,20 +63,20 @@ export default function Settings(props) {
                         color="success"
                         onClick={async () => {
                             const wikiData = await SearchWiki()
-                            Storage("set", wikiData, "wikiData")
+                            storage("set", wikiData, "wikiData")
                             props.setWikiData(wikiData)
                         }}
                     >Refresh Data From Wiki</Button>
                 </Grid>
                 <Grid container direction="column" sx={{flexGrow: 1}}>
                     {settingsTitle("Confirmation")}
-                    {Object.keys(Storage("get", "", "Confirm")).map((key) => (
+                    {Object.keys(storage("get", "", "Confirm")).map((key) => (
                         <Grid>
                             <FormControlLabel control={
                                 <Switch
-                                    checked={Storage("get", "", "Confirm", key)}
+                                    checked={storage("get", "", "Confirm", key)}
                                     onChange={(event) => {
-                                        Storage("set", event.target.checked, "Confirm", key)
+                                        storage("set", event.target.checked, "Confirm", key)
                                         setReRender(!reRender)
                                     }}
                                     inputProps={{'aria-label': 'controlled'}}

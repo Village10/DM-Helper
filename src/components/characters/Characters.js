@@ -2,45 +2,29 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import EditButton from "./buttons/EditButton";
-import NewButton from "./buttons/NewButton";
-import DeleteButton from "./buttons/DeleteButton";
 import {CardActionArea} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Storage from "../../util/Storage";
-import DetailsButton from "./buttons/DetailsButton";
+import storage from "../../util/storage";
 import PersonIcon from "@mui/icons-material/Person";
+import ButtonBar from "./ButtonBar"
 
 export default function Characters({setSearch, setTab}) {
 
+    // TODO: Make autocomplete for character details
     let [selected, setSelected] = React.useState(null);
 
     return (
         <Box sx={{width: '100%', maxWidth: {sm: '100%', md: '1700px'}}}>
             <Typography variant="h1" align="center" style={{marginBottom: 20}}>Characters</Typography>
-            <Grid
-                container
-                spacing={2}
-                sx={{mb: (theme) => theme.spacing(2)}}
-                justifyContent="space-between"
-            >
-                <Grid container>
-                    <DetailsButton selected={selected} setSelected={setSelected} setSearch={setSearch} setTab={setTab} ></DetailsButton>
-                </Grid>
-                <Grid container>
-                    <EditButton selected={selected} setSelected={setSelected} ></EditButton>
-                    <NewButton selected={selected} setSelected={setSelected} ></NewButton>
-                    <DeleteButton selected={selected} setSelected={setSelected} ></DeleteButton>
-                </Grid>
-            </Grid>
+            <ButtonBar selected={selected} setSelected={setSelected} setTab={setTab} setSearch={setSearch} />
             <Grid
                 container
                 spacing={2}
                 columns={12}
                 sx={{ mb: (theme) => theme.spacing(2) }}
             >
-                {Storage("get", "", "Characters").map((item) => (
+                {storage("get", "", "Characters").map((item) => (
                     <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
                         <CardActionArea onClick={() => {
                             if (!selected) {

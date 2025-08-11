@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
-import Storage from "../../../util/Storage";
+import storage from "../../../util/storage";
 import * as React from "react";
 
 export default function NewButton({setValue}) {
@@ -25,11 +25,11 @@ export default function NewButton({setValue}) {
                         event.preventDefault();
                         const formData = new FormData(event.currentTarget);
                         const formJson = Object.fromEntries(formData.entries());
-                        if (Object.keys(Storage("get", "", "Notes")).includes(formJson.name)) {
+                        if (Object.keys(storage("get", "", "Notes")).includes(formJson.name)) {
                             setError(true)
                         } else {
-                            Storage("set", "", "Notes", formJson.name)
-                            Storage("set", formJson.name, "Note")
+                            storage("set", "", "Notes", formJson.name)
+                            storage("set", formJson.name, "Note")
                             setValue("")
                             setError(false)
                             setOpenNew(false);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {alpha} from '@mui/material/styles';
+import {alpha, useTheme} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -20,10 +20,10 @@ import {
   datePickersCustomizations,
   treeViewCustomizations,
 } from './theme/customizations';
-import Storage from "./util/Storage";
-import SearchWiki from "./components/search/SearchWiki";
-import { db } from "./util/Firebase.js"
+import storage from "./util/storage";
+import { db } from "./util/firebase.js"
 import {doc, getDoc} from "firebase/firestore";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -33,21 +33,37 @@ const xThemeComponents = {
 };
 
 export default function App(props) {
-    Storage("createIfNeeded", true, "Confirm", "deleting a combatant")
-    Storage("createIfNeeded", true, "Confirm", "deleting a character")
-    Storage("createIfNeeded", true, "Confirm", "deleting a note")
+
+    if (!localStorage.getItem('mui-mode')) {
+        localStorage.setItem('mui-mode', 'dark');
+    }
+
+    storage("createIfNeeded", true, "Confirm", "deleting a combatant")
+    storage("createIfNeeded", true, "Confirm", "deleting a character")
+    storage("createIfNeeded", true, "Confirm", "deleting a note")
     const [wikiData, setWikiData] = React.useState(null);
     const [search, setSearch] = React.useState("");
     const [tab, setTab] = React.useState("Combat");
 
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    // TODO: Find new name for app
+    // TODO: Make app function offline
+    // TODO: Transfer from CRA to Vite
+    // TODO: Transfer from js to ts
+    // TODO: Use Redux to stop prop drilling
+    // TODO: Add tutorial
+    // TODO: Write and enforce eslint rules
+
     React.useEffect(() => {
-        const wikiData = Storage("get", "", "wiki-data")
+        const wikiData = storage("get", "", "wiki-data")
         if (wikiData) {
             setWikiData(wikiData)
         } else {
             getDoc(doc(db, "wiki-data", "index")).then(res => {
                 if (res.exists()) {
-                    Storage("set", res.data()["index"], "wiki-data");
+                    storage("set", res.data()["index"], "wiki-data");
                     setWikiData(res.data()["index"]);
                 } else {
                     console.error("wiki-data not found!");
@@ -56,12 +72,14 @@ export default function App(props) {
         }
     }, [])
 
-    if (tab.slice(0, 6) === "Update") {
-        setTab(tab.slice(6));
-    }
+    React.useEffect(() => {
+        if (tab.startsWith("Update")) {
+            setTab(tab.slice(6));
+        }
+    }, [tab]);
 
-    // ToDo: Make tabs functionality cleaner
-    // ToDo: Make feedback tab
+    // TODO: Make tabs functionality cleaner
+    // TODO: Make feedback tab
     const tabs = {
         Combat: Combat,
         Characters: Characters,
@@ -76,9 +94,9 @@ export default function App(props) {
     return (
         <AppTheme {...props} themeComponents={xThemeComponents}>
             <CssBaseline enableColorScheme />
-            <Box sx={{ display: 'flex' }}>
-            <SideMenu setTab={setTab} tab={tab} />
+            <Box sx={{ display: 'flex' }}>\
             <AppNavbar setTab={setTab} tab={tab} />
+            <SideMenu setTab={setTab} tab={tab} />
             <Box
                 component="main"
                 sx={(theme) => ({
@@ -92,14 +110,14 @@ export default function App(props) {
                 <Stack
                     spacing={2}
                     sx={{
-                    alignItems: 'center',
-                    mx: 3,
-                    pb: 5,
-                    mt: { xs: 8, md: 0 },
+                        alignItems: 'center',
+                        mx: 3,
+                        pb: 5,
+                        mt: { xs: 16, md: 0 },
                     }}
                 >
-                    <Header tab={tab} setTab={setTab}/>
-                    <SelectedTab search={search} setSearch={setSearch} setTab={setTab} wikiData={wikiData} setWikiData={setWikiData} />
+                    {isSmallScreen ? null : <Header tab={tab} setTab={setTab}/>}
+                    {SelectedTab && <SelectedTab search={search} setSearch={setSearch} setTab={setTab} wikiData={wikiData} setWikiData={setWikiData} />}
                 </Stack>
             </Box>
             </Box>

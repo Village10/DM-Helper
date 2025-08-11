@@ -5,7 +5,7 @@ import * as React from "react";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
-import Storage from "../../../util/Storage"
+import storage from "../../../util/storage"
 
 export default function EditButton({selected, setSelected}) {
 
@@ -38,7 +38,7 @@ export default function EditButton({selected, setSelected}) {
                             selected.subClass = formJson.subClass;
                             selected.species = formJson.species;
                             selected.background = formJson.background;
-                            Storage("set", Storage("get", "", "Characters").map(obj => obj.id === selected.id ? selected : obj), "Characters")
+                            storage("set", storage("get", "", "Characters").map(obj => obj.id === selected.id ? selected : obj), "Characters")
                             setSelected(null)
                             setOpenEdit(false);
                         },

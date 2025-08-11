@@ -10,9 +10,6 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import Box from "@mui/material/Box";
 
 export default function DetailsButton({selected, setSelected, setTab, setSearch}) {
-
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [openEdit, setOpenEdit] = React.useState(false);
     
     return (
@@ -22,7 +19,6 @@ export default function DetailsButton({selected, setSelected, setTab, setSearch}
                 size="small"
                 color="success"
                 endIcon={<InfoOutlinedIcon/>}
-                fullWidth={isSmallScreen}
                 onClick={selected ? () => setOpenEdit(true): null}
             >Details</Button>
             <Dialog open={openEdit} onClose={() => setOpenEdit(false)}

@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import {Delete} from "@mui/icons-material";
-import Storage from "../../../util/Storage";
+import storage from "../../../util/storage";
 import {Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel} from "@mui/material";
 import * as React from "react";
 
@@ -17,12 +17,12 @@ export default function DeleteButton({value, setValue}) {
                 endIcon={<Delete/>}
                 size="small"
                 onClick={ () => {
-                    if (Storage("get","", "Note") !== "None") {
-                        if (Storage("get", "", "Confirm", "deleting a note")) {
+                    if (storage("get","", "Note") !== "None") {
+                        if (storage("get", "", "Confirm", "deleting a note")) {
                             setOpenDelete(true)
                         } else {
-                            Storage("delete", "", "Notes", Storage("get", "", "Note"))
-                            Storage("set", "None", "Note")
+                            storage("delete", "", "Notes", storage("get", "", "Note"))
+                            storage("set", "None", "Note")
                             setValue(value + " ")
                         }
                     }}}
@@ -32,10 +32,10 @@ export default function DeleteButton({value, setValue}) {
                         onSubmit: (event) => {
                             event.preventDefault();
                             if (error) {
-                                Storage("set", false, "Confirm", "deleting a note")
+                                storage("set", false, "Confirm", "deleting a note")
                             }
-                            Storage("delete", "", "Notes", Storage("get", "", "Note"))
-                            Storage("set", "None", "Note")
+                            storage("delete", "", "Notes", storage("get", "", "Note"))
+                            storage("set", "None", "Note")
                             setValue(value + " ")
                             setOpenDelete(false);
                         },

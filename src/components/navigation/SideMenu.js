@@ -2,7 +2,8 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import MuiDrawer, { drawerClasses } from '@mui/material/Drawer';
 import MenuContent from './MenuContent';
-import titleimage from "../../images/favicon.ico"
+import titleimage from "../../images/title.png"
+import UserAccount from "../account/UserAccount";
 
 const drawerWidth = 240;
 
@@ -28,8 +29,9 @@ export default function SideMenu({ tab, setTab }) {
               },
           }}
       >
-          <img src={titleimage} alt="Logo" style={{ width: '100%', padding: '50px' }} />
+          <img src={titleimage} alt="Logo" style={{ width: '75%', margin: '12.5% 16% 12.5% 9%' }} />
           <MenuContent tab={tab} setTab={setTab} />
+          <UserAccount tab={tab} setTab={setTab} />
       </Drawer>
   );
 }

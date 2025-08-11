@@ -4,12 +4,10 @@ import Button from "@mui/material/Button";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import {Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, TextField} from "@mui/material";
 import * as React from "react";
-import Storage from "../../../util/Storage"
+import storage from "../../../util/storage"
 
-export default function DamageButton({selected, setSelected}) {
+export default function DamageButton({selected, setSelected, combatants, setCombatants}) {
 
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [openHeal, setOpenHeal] = React.useState(false)
     const [temporary, setTemporary] = React.useState(false)
     
@@ -20,7 +18,6 @@ export default function DamageButton({selected, setSelected}) {
                 size="small"
                 color="success"
                 endIcon={<LocalHospitalIcon/>}
-                fullWidth={isSmallScreen}
                 onClick={selected ? () => setOpenHeal(true) : null}
             >Heal</Button>
             <Dialog open={openHeal} onClose={() => {setOpenHeal(false); setTemporary(false)}}
@@ -29,7 +26,7 @@ export default function DamageButton({selected, setSelected}) {
                             event.preventDefault();
                             const formData = new FormData(event.currentTarget);
                             const formJson = Object.fromEntries(formData.entries());
-                            let instances = Storage("get", "", "Combat")
+                            let instances = combatants
                             let index = instances.findIndex(obj => obj.id === selected.id)
                             if (temporary) {
                                 instances.at(instances.findIndex(obj => obj.id === selected.id)).temp_health = parseInt(formJson.health)
@@ -37,7 +34,7 @@ export default function DamageButton({selected, setSelected}) {
                             else {
                                 instances.at(index).health = Math.max(Math.min(instances.at(index).health + parseInt(formJson.health), instances.at(index).max_health), 0)
                             }
-                            Storage("set", instances, "Combat")
+                            setCombatants(instances)
                             setTemporary(false)
                             setSelected(null)
                             setOpenHeal(false);

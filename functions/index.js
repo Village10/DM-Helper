@@ -48,6 +48,8 @@ export const getWikiData = onSchedule(
       }
 
       // Save index to firestore
-      await db.collection("wiki-data").doc("index").set({ "index": index });
+      await db.collection("wiki-data").doc("index").set(
+          { "index": index.sort((a, b) => a.name.localeCompare(b.name)) },
+      );
     },
 );

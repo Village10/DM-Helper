@@ -3,7 +3,8 @@ import Divider from '@mui/material/Divider';
 import Drawer, { drawerClasses } from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import MenuContent from './MenuContent';
-import titleimage from "../../images/favicon.ico";
+import titleimage from "../../images/title.png";
+import UserAccount from "../account/UserAccount";
 
 export default function SideMenuMobile({ open, toggleDrawer, tab, setTab }) {
     return (
@@ -27,17 +28,17 @@ export default function SideMenuMobile({ open, toggleDrawer, tab, setTab }) {
             >
                 <Stack
                     sx={{
-                        maxWidth: '70dvw',
-                        height: '20%',
+                        width: '75%',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        margin: '5% 12.5%',
                     }}
                 >
-                    <img src={titleimage} alt="Logo" style={{width: '60%', padding: '20px'}}/>
+                    <img src={titleimage} alt="Logo" style={{width: '100%'}}/>
                 </Stack>
                 <Stack sx={{flexGrow: 1}}>
                     <MenuContent setTab={setTab} tab={tab} />
-                    <Divider/>
+                    <UserAccount tab={tab} setTab={setTab} />
                 </Stack>
             </Stack>
         </Drawer>

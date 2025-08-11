@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import Storage from "../../util/Storage"
+import storage from "../../util/storage"
 import Dropdown from "./buttons/Dropdown";
 import NewButton from "./buttons/NewButton";
 import DeleteButton from "./buttons/DeleteButton";
@@ -13,11 +13,11 @@ export default function Notes() {
 
     const [rows, setRows] = useState(Math.floor((window.innerHeight - 220) / 21));
 
-    Storage("createIfNeeded", "None", "Note")
-    Storage("createIfNeeded", "", "Notes", "None")
+    storage("createIfNeeded", "None", "Note")
+    storage("createIfNeeded", "", "Notes", "None")
 
-    const note = Storage("get", "", "Note");
-    const [value, setValue] = useState(Storage("get", "", "Notes", note))
+    const note = storage("get", "", "Note");
+    const [value, setValue] = useState(storage("get", "", "Notes", note))
 
     const [open, setOpen] = React.useState({
         newdrop: false,
@@ -76,7 +76,7 @@ export default function Notes() {
                     rows={rows}
                     value={value}
                     style={{ marginBottom: -30}}
-                    onChange={(event) => {Storage("set", event.target.value, "Notes", note); setValue(event.target.value);}}
+                    onChange={(event) => {storage("set", event.target.value, "Notes", note); setValue(event.target.value);}}
                 /> : null
             }
         </Box>

@@ -12,7 +12,7 @@ import * as React from "react";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useState} from "react";
-import Storage from "../../../util/Storage";
+import storage from "../../../util/storage";
 import Box from "@mui/material/Box";
 
 
@@ -39,8 +39,8 @@ export default function NewButton({selected, setSelected}) {
                             const formData = new FormData(event.currentTarget);
                             const formJson = Object.fromEntries(formData.entries());
                             new Character(formJson.name, formJson.level, formJson.health, formJson.armor, formJson.mainClass, formJson.subClass, formJson.species, formJson.background);
-                            setSelected(Storage("get", "", "Characters").at(-1))
-                            Storage("get", "", "Characters").at(-1).initiative = formJson.initiative ? formJson.initiative : null
+                            setSelected(storage("get", "", "Characters").at(-1))
+                            storage("get", "", "Characters").at(-1).initiative = formJson.initiative ? formJson.initiative : null
                             setOpenNew(false);
                         },
                     }}

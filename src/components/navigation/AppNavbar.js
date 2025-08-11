@@ -7,7 +7,7 @@ import { tabsClasses } from '@mui/material/Tabs';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import MenuButton from './MenuButton';
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
-import titleimage from "../../images/favicon.ico";
+import titleimage from "../../images/title.png";
 import SideMenuMobile from "./SideMenuMobile";
 
 const Toolbar = styled(MuiToolbar)({
@@ -61,7 +61,7 @@ export default function AppNavbar({tab, setTab}) {
                 spacing={1}
                 sx={{justifyContent: 'left', mr: 'auto'}}
             >
-              <img src={titleimage} alt="Logo" style={{width: '20%', padding: '2px'}}/>
+              <img src={titleimage} alt="Logo" style={{ height: "75px" }}/>
             </Stack>
             <ColorModeIconDropdown data-screenshot=""/>
             <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>

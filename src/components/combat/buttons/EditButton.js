@@ -4,13 +4,9 @@ import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui
 import * as React from "react";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Storage from "../../../util/Storage";
+import storage from "../../../util/storage";
 
-export default function EditButton({selected, setSelected, openEdit, setOpenEdit}) {
-
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+export default function EditButton({selected, setSelected, openEdit, setOpenEdit, combatants, setCombatants}) {
     return (
         <>
             <Button
@@ -18,7 +14,6 @@ export default function EditButton({selected, setSelected, openEdit, setOpenEdit
                 size="small"
                 color="success"
                 endIcon={<EditIcon/>}
-                fullWidth={isSmallScreen}
                 onClick={selected ? () => setOpenEdit(true): null}
             >Edit</Button>
             <Dialog open={openEdit} onClose={() => setOpenEdit(false)}
@@ -27,7 +22,7 @@ export default function EditButton({selected, setSelected, openEdit, setOpenEdit
                             event.preventDefault();
                             const formData = new FormData(event.currentTarget);
                             const formJson = Object.fromEntries(formData.entries());
-                            let instances = Storage("get", "", "Combat")
+                            let instances = combatants
                             instances[instances.findIndex(obj => obj.id === selected.id)] = {
                                 ...instances[instances.findIndex(obj => obj.id === selected.id)],
                                 "name": formJson.name,
@@ -36,7 +31,7 @@ export default function EditButton({selected, setSelected, openEdit, setOpenEdit
                                 "armor": parseInt(formJson.armor),
                                 "initiative": parseInt(formJson.initiative)
                             }
-                            Storage("set", instances, "Combat")
+                            setCombatants(instances);
                             setSelected(null)
                             setOpenEdit(false);
                         },

@@ -4,13 +4,9 @@ import {Combatant} from "../Combatant";
 import * as React from "react";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Storage from "../../../util/Storage"
+import storage from "../../../util/storage"
 
-export default function DuplicateButton({selected, setSelected}) {
-
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+export default function DuplicateButton({selected, setSelected, combatants, newCombatant}) {
     return (
         <>
             <Button
@@ -18,15 +14,14 @@ export default function DuplicateButton({selected, setSelected}) {
                 size="small"
                 color="success"
                 endIcon={<ContentCopyIcon/>}
-                fullWidth={isSmallScreen}
                 onClick={() => {
                     if (selected) {
                         if (selected.character) {
-                            new Combatant(selected.name, selected.max_health, selected.armor, selected.character);
+                            newCombatant(selected.name, selected.max_health, selected.armor, selected.character);
                         } else {
-                            new Combatant(selected.name, selected.max_health, selected.armor);
+                            newCombatant(selected.name, selected.max_health, selected.armor);
                         }
-                        setSelected(Storage("get", "", "Combat").at(-1))
+                        setSelected(combatants.at(-1))
                     }
                 }}
             >Duplicate</Button>

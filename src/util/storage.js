@@ -1,4 +1,4 @@
-export default function Storage(action, value, main, secondary) {
+export default function storage(action, value, main, secondary) {
     let item = localStorage.getItem(main);
     switch (action) {
         case "set":
