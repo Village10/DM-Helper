@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid2'
 import Box from '@mui/material/Box'
-import * as React from 'react'
 
 import storage from '../../util/storage'
 

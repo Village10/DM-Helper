@@ -1,9 +1,8 @@
-import * as React from 'react'
 import { Avatar, CardActionArea } from '@mui/material'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import { listClasses } from '@mui/material/List'
@@ -24,10 +23,10 @@ export default function ProfileButton({ setTab, tab }) {
 
 	// FIX: Save data to firestore
 	// TODO: Cleanup account system code
-	const [openConfirmation, setOpenConfirmation] = React.useState(false)
+	const [openConfirmation, setOpenConfirmation] = useState(false)
 	const [, setUpdate] = useState(false)
-	const [openDrop, setOpenDrop] = React.useState(false)
-	const drop = React.useRef<HTMLButtonElement>(null)
+	const [openDrop, setOpenDrop] = useState(false)
+	const drop = useRef<HTMLButtonElement>(null)
 
 	useEffect(() => {
 		const auth = getAuth()

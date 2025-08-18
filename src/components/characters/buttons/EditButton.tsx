@@ -1,22 +1,20 @@
 import Button from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
 import { Dialog, DialogActions, DialogTitle} from '@mui/material'
-import * as React from 'react'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import storage from '../../../util/storage'
 import CharacterFields from '../CharacterFields'
 import {Character} from "../Character";
+import {useState} from "react";
 
 export default function EditButton({ selected, setSelected }) {
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-	const [openEdit, setOpenEdit] = React.useState(false)
-
-	// FIX: Default values
+	const [openEdit, setOpenEdit] = useState(false)
 
 	return (
 		<>
@@ -55,7 +53,7 @@ export default function EditButton({ selected, setSelected }) {
 				<DialogTitle>
 					Edit Character
 				</DialogTitle>
-				<CharacterFields />
+				<CharacterFields selected={selected} />
 				<DialogActions>
 					<Button
 						onClick={() => setOpenEdit(false)}

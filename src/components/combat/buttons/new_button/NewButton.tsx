@@ -4,7 +4,6 @@ import AddIcon from '@mui/icons-material/Add'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import * as React from 'react'
 import {Dispatch, SetStateAction, useRef, useState} from 'react'
 
 import FromSave from './FromSave'
@@ -15,19 +14,18 @@ import {Combatant} from "../../Combatant";
 import {Character} from "../../../characters/Character";
 
 interface NewButtonProps {
-	selected: Combatant | null,
 	setSelected: Dispatch<SetStateAction<Combatant | null>>,
 	combatants: Combatant[],
 	newCombatant:(
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void,
 }
 
-export default function NewButton({ selected, setSelected, combatants, newCombatant }: NewButtonProps) {
+export default function NewButton({ setSelected, combatants, newCombatant }: NewButtonProps) {
 
 	const [openNew, setOpenNew] = useState<boolean>(false)
 	const [openSaved, setOpenSaved] = useState<boolean>(false)
@@ -101,7 +99,7 @@ export default function NewButton({ selected, setSelected, combatants, newCombat
 				{...{ openSaved, setOpenSaved, combatants, newCombatant, setSelected }}
 			/>
 			<FromText
-				{...{ selected, newCombatant, openNew, setOpenNew }}
+				{...{ newCombatant, openNew, setOpenNew }}
 			/>
 			<FromCharacter
 				{...{ combatants, newCombatant, setSelected, openCharacter, setOpenCharacter }}

@@ -9,7 +9,6 @@ import {
 	TextField
 } from '@mui/material'
 import Button from '@mui/material/Button'
-import * as React from 'react'
 
 import { db } from '../../../../util/firebase'
 import toStorable from '../../../../util/toStorable'
@@ -24,7 +23,7 @@ interface FromMonsterProps {
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void
 }
@@ -53,7 +52,7 @@ export default function FromMonster({ openMonster, setOpenMonster, newCombatant 
 									const maxHealth = healthMatch ? healthMatch[1] : 0
 									const armorMatch = data.match(/<strong>Armor Class<\/strong>\s*(\d+)/)
 									const armor = armorMatch ? armorMatch[1] : 0
-									newCombatant(newValue, maxHealth, armor)
+									newCombatant(newValue, maxHealth, armor, newValue)
 								})
 								setOpenMonster(false)
 							}

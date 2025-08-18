@@ -1,6 +1,5 @@
 import Button from '@mui/material/Button'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import * as React from 'react'
 import {Combatant} from "../Combatant";
 import {Character} from "../../characters/Character";
 
@@ -10,7 +9,7 @@ interface DuplicateButtonProps {
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void
 }

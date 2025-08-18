@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button'
-import * as React from 'react'
 import Grid from '@mui/material/Grid2'
 
 import settingsTitle from '../../../util/settings/settingsTitle'

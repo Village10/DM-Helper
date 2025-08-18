@@ -12,7 +12,7 @@ export class Combatant {
 		public name: string,
 		public maxHealth: number ,
 		public armor: number,
-		public character?: Character | null,
+		public character: Character | string | null = null,
 	) {
 		this.id = storage('get', '', 'combatant-id')
 		this.health = maxHealth

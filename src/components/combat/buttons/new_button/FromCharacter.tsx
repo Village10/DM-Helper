@@ -1,6 +1,5 @@
 import { Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormGroup } from '@mui/material'
 import Button from '@mui/material/Button'
-import * as React from 'react'
 
 import storage from '../../../../util/storage'
 import {Dispatch, SetStateAction, useState} from "react";
@@ -16,7 +15,7 @@ interface FromCharacterProps {
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void
 }

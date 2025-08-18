@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button'
 import SaveIcon from '@mui/icons-material/Save'
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
-import * as React from 'react'
 
 import storage from '../../../util/storage'
 import {Combatant} from "../Combatant";
+import {useState} from "react";
 
 interface SaveCombatantButtonProps {
 	selected: Combatant | null
@@ -12,8 +12,8 @@ interface SaveCombatantButtonProps {
 
 export default function SaveCombatantButton({ selected }: SaveCombatantButtonProps) {
 
-	const [openSave, setOpenSave] = React.useState(false)
-	const [error, setError] = React.useState(false)
+	const [openSave, setOpenSave] = useState(false)
+	const [error, setError] = useState(false)
 
 	return (
 		<>

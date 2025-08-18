@@ -10,8 +10,6 @@ export default async function getWikiPages() {
     "All Backgrounds",
   ];
 
-  // FEATURE: Use sitemap
-
   async function fetchLinks(temp: Record<string, string>, link: string) {
     const res = await axiosCall("http://dnd2024.wikidot.com" + link);
     const cheerioData = cheerio.load(res?.data);

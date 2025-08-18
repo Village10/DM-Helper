@@ -1,7 +1,6 @@
 import Button from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
 import { Dialog, DialogActions, DialogTitle } from '@mui/material'
-import * as React from 'react'
 import CombatantFields from '../CombatantFields'
 import {Dispatch, SetStateAction} from "react";
 import {Combatant} from "../Combatant";
@@ -35,7 +34,7 @@ export default function EditButton({ selected, setSelected, openEdit, setOpenEdi
 						event.preventDefault()
 						const formData = new FormData(event.currentTarget as HTMLFormElement)
 						const formJson = Object.fromEntries(formData.entries()) as Record<string, string>
-						const instances = { ...combatants }
+						const instances = [...combatants]
 						const index = instances.findIndex((obj) => obj.id === selected?.id)
 						instances[index] = {
 							...instances[index],
@@ -53,7 +52,7 @@ export default function EditButton({ selected, setSelected, openEdit, setOpenEdi
 				<DialogTitle>
 					Edit Combatant
 				</DialogTitle>
-				<CombatantFields {...{selected}}/>
+				<CombatantFields selected={selected}/>
 				<DialogActions>
 					<Button
 						onClick={() => setOpenEdit(false)}

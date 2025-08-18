@@ -1,9 +1,8 @@
 import {DialogContent, TextField} from "@mui/material";
-import * as React from "react";
 import {Combatant} from "./Combatant";
 
 interface CombatantFieldsProps {
-    selected: Combatant | null
+    selected?: Combatant | null
 }
 
 export default function CombatantFields({selected}: CombatantFieldsProps) {

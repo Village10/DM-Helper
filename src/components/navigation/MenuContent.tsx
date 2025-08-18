@@ -1,4 +1,3 @@
-import * as React from 'react'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -31,7 +30,6 @@ interface MenuContentProps {
 }
 
 export default function MenuContent({ tab, setTab }: MenuContentProps) {
-
 	return (
 		<Stack
 			sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}

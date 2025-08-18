@@ -1,8 +1,7 @@
-import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import MuiDrawer, { drawerClasses } from '@mui/material/Drawer'
 
-import titleimage from '../../images/title.png'
+import titleImage from '../../images/title.png'
 import UserAccount from '../account/UserAccount'
 
 import MenuContent from './MenuContent'
@@ -38,7 +37,7 @@ export default function SideMenu({ tab, setTab }: SideMenuProps) {
 			}}
 		>
 			<img
-				src={titleimage}
+				src={titleImage}
 				alt='Logo'
 				style={{ width: '75%', margin: '12.5% 16% 12.5% 9%' }}
 			/>

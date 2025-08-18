@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { alpha, Theme, useTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
@@ -17,6 +16,7 @@ import SideMenu from './components/navigation/SideMenu'
 import AppTheme from './shared-theme/AppTheme'
 import storage from './util/storage'
 import getWikiData from './util/getWikiData'
+import {useEffect, useState} from "react";
 
 // FIX: Any type prop
 export default function App(props: any) {
@@ -27,28 +27,25 @@ export default function App(props: any) {
 
 	storage('createIfNeeded', true, 'confirmations', 'deleting a character')
 	storage('createIfNeeded', true, 'confirmations', 'deleting a note')
-	const [wikiData, setWikiData] = React.useState<{ name: string, tags: string[] }[] | null>(null)
-	const [search, setSearch] = React.useState<string>('')
-	const [tab, setTab] = React.useState<string>('Combat')
+	const [wikiData, setWikiData] = useState<{ name: string, tags: string[] }[] | null>(null)
+	const [search, setSearch] = useState<string>('')
+	const [tab, setTab] = useState<string>('Combat')
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
 
 	// FIX: Find new name
 	// FIX: Make app function offline
-	// TODO: Transfer from js to tsx
 	// TODO: Add tutorial
-	// TODO: Make tabs functionality cleaner
 	// TODO: Make feedback tab
-	// FEATURE: Use Redux to stop prop drilling
 	// FEATURE: Add to DriveThroughRPG
 	// FEATURE: Dice roller
 
-	React.useEffect(() => {
+	useEffect(() => {
 		getWikiData(setWikiData)
 	}, [])
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (tab.startsWith('Update')) {
 			setTab(tab.slice(6) as keyof typeof tabs)
 		}

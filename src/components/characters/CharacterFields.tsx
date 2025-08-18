@@ -1,9 +1,13 @@
 import {Autocomplete, DialogContent, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import storage from "../../util/storage";
-import * as React from "react";
+import {Character} from "./Character";
 
-export default function CharacterFields() {
+interface CharacterFieldsProps {
+    selected?: Character | null
+}
+
+export default function CharacterFields({selected}: CharacterFieldsProps) {
     return (
         <DialogContent>
             <TextField
@@ -14,6 +18,7 @@ export default function CharacterFields() {
                 name='name'
                 label='Name'
                 type='string'
+                defaultValue={selected?.name}
                 fullWidth
                 variant='standard'
             />
@@ -32,6 +37,7 @@ export default function CharacterFields() {
                     label='Level'
                     type='number'
                     slotProps={{ input: { inputProps: { min: 1 } } }}
+                    defaultValue={selected?.level}
                     variant='standard'
                 />
                 <TextField
@@ -42,6 +48,7 @@ export default function CharacterFields() {
                     label='Max Health'
                     type='number'
                     slotProps={{ input: { inputProps: { min: 1 } } }}
+                    defaultValue={selected?.maxHealth}
                     variant='standard'
                 />
                 <TextField
@@ -52,6 +59,7 @@ export default function CharacterFields() {
                     label='Armor Class'
                     type='number'
                     slotProps={{ input: { inputProps: { min: 0 } } }}
+                    defaultValue={selected?.armor}
                     variant='standard'
                 />
             </Box>
@@ -70,6 +78,7 @@ export default function CharacterFields() {
                         name='mainClass'
                         label='Class'
                         type='string'
+                        defaultValue={selected?.mainClass}
                         fullWidth
                         variant='standard'
                     />
@@ -90,6 +99,7 @@ export default function CharacterFields() {
                         name='subClass'
                         label='Sub-Class'
                         type='string'
+                        defaultValue={selected?.subClass}
                         fullWidth
                         variant='standard'
                     />
@@ -110,6 +120,7 @@ export default function CharacterFields() {
                         name='species'
                         label='Species'
                         type='string'
+                        defaultValue={selected?.species}
                         fullWidth
                         variant='standard'
                     />
@@ -130,6 +141,7 @@ export default function CharacterFields() {
                         name='background'
                         label='Background'
                         type='string'
+                        defaultValue={selected?.background}
                         fullWidth
                         variant='standard'
                     />

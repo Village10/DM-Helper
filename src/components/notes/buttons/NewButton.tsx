@@ -1,10 +1,9 @@
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
-import * as React from 'react'
 
 import storage from '../../../util/storage'
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 
 interface NewButtonProps {
     setValue: Dispatch<SetStateAction<string>>
@@ -12,8 +11,8 @@ interface NewButtonProps {
 
 export default function NewButton({ setValue }: NewButtonProps) {
 
-	const [openNew, setOpenNew] = React.useState(false)
-	const [error, setError] = React.useState(false)
+	const [openNew, setOpenNew] = useState(false)
+	const [error, setError] = useState(false)
 
 	return (
 		<>

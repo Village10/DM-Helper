@@ -5,7 +5,7 @@ export default function changeHealth(
     combatantId: number,
     setCombatants: Dispatch<SetStateAction<Combatant[]>>,
     amount: number,
-    tempHealth: number
+    tempHealth?: number
 ) {
 	setCombatants((prev) =>
 		prev.map((mappedCombatant) =>

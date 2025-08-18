@@ -1,25 +1,22 @@
 import { Dialog, DialogActions, DialogTitle } from '@mui/material'
 import Button from '@mui/material/Button'
-import * as React from 'react'
 import CombatantFields from '../../CombatantFields'
 import {Dispatch, SetStateAction} from "react";
-import {Combatant} from "../../Combatant";
 import {Character} from "../../../characters/Character";
 
 interface FromTextProps {
-	selected: Combatant | null,
 	openNew: boolean,
 	setOpenNew: Dispatch<SetStateAction<boolean>>,
 	newCombatant:(
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void,
 }
 
-export default function FromText({ selected, openNew, setOpenNew, newCombatant }: FromTextProps) {
+export default function FromText({ openNew, setOpenNew, newCombatant }: FromTextProps) {
 	return (
 		<Dialog
 			open={openNew}
@@ -37,7 +34,7 @@ export default function FromText({ selected, openNew, setOpenNew, newCombatant }
 			<DialogTitle>
 				New Combatant
 			</DialogTitle>
-			<CombatantFields selected={selected}/>
+			<CombatantFields />
 			<DialogActions>
 				<Button
 					onClick={() => setOpenNew(false)}

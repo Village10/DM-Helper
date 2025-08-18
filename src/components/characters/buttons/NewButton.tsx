@@ -5,20 +5,20 @@ import {
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
-import * as React from 'react'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import storage from '../../../util/storage'
 import { Character } from '../Character'
 import CharacterFields from '../CharacterFields'
+import {useState} from "react";
 
 export default function NewButton({ setSelected }) {
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-	const [openNew, setOpenNew] = React.useState(false)
+	const [openNew, setOpenNew] = useState(false)
 
 	return (
 		<>

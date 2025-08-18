@@ -1,19 +1,19 @@
 import Button from '@mui/material/Button'
 import Delete from '@mui/icons-material/Delete'
-import * as React from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
 import storage from '../../../util/storage'
 import Confirmation from '../../../util/Confirmation'
 import {Character} from "../Character";
+import {useState} from "react";
 
 export default function DeleteButton({ selected, setSelected }) {
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-	const [openConfirmation, setOpenConfirmation] = React.useState(false)
+	const [openConfirmation, setOpenConfirmation] = useState(false)
 
 	return (
 		<>

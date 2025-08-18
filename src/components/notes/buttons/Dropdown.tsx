@@ -3,10 +3,9 @@ import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Grid from '@mui/material/Grid2'
-import * as React from 'react'
 
 import storage from '../../../util/storage'
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useRef, useState} from "react";
 
 interface DropdownProps {
     value: string,
@@ -15,8 +14,8 @@ interface DropdownProps {
 
 export default function Dropdown({ value, setValue }: DropdownProps) {
 
-	const [openDrop, setOpenDrop] = React.useState(false)
-    const drop = React.useRef(null)
+	const [openDrop, setOpenDrop] = useState(false)
+    const drop = useRef(null)
 
 	return (
 		<Grid

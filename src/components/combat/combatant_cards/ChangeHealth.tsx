@@ -1,12 +1,11 @@
 import Stack from '@mui/material/Stack'
 import { FavoriteBorder, HeartBrokenOutlined } from '@mui/icons-material'
 import IconButton from '@mui/material/IconButton'
-import * as React from 'react'
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 
 import changeHealth from '../../../util/combat/changeHealth'
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {Combatant} from "../Combatant";
 
 interface ChangeHealthProps {
@@ -16,7 +15,7 @@ interface ChangeHealthProps {
 
 export default function ChangeHealth({ combatant, setCombatants }: ChangeHealthProps) {
 
-	const [open, setOpen] = React.useState(false)
+	const [open, setOpen] = useState(false)
 
 	return (
 		<>

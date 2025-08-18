@@ -4,7 +4,6 @@ import Delete from '@mui/icons-material/Delete'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import * as React from 'react'
 import Divider from '@mui/material/Divider'
 
 import { DeleteSaved } from './DeleteSaved'

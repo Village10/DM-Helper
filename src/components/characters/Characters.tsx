@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography'
-import * as React from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid2'
 import { CardActionArea } from '@mui/material'
@@ -11,13 +10,18 @@ import storage from '../../util/storage'
 
 import ButtonBar from './ButtonBar'
 import {Character} from "./Character";
+import {Dispatch, SetStateAction, useState} from "react";
 
-export default function Characters({ setSearch, setTab }) {
+interface CharactersProps {
+    setSearch: Dispatch<SetStateAction<string>>,
+    setTab: Dispatch<SetStateAction<string>>,
+}
 
-	// TODO: Make autocomplete for character details
+export default function Characters({ setSearch, setTab }: CharactersProps) {
+
 	// FIX: How characters are stored
 	storage('createIfNeeded', 0, 'character-id')
-	const [selected, setSelected] = React.useState<Character | null>(null)
+	const [selected, setSelected] = useState<Character | null>(null)
 
 	return (
 		<Box

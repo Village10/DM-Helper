@@ -1,22 +1,21 @@
 import { Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, FormGroup } from '@mui/material'
 import Button from '@mui/material/Button'
-import * as React from 'react'
 
 import storage from '../../../../util/storage'
-import {Dispatch, useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {Combatant} from "../../Combatant";
 import {Character} from "../../../characters/Character";
 
 interface FromSaveProps {
-	setSelected: Dispatch<React.SetStateAction<Combatant | null>>,
+	setSelected: Dispatch<SetStateAction<Combatant | null>>,
 	openSaved: boolean,
-	setOpenSaved: Dispatch<React.SetStateAction<boolean>>,
+	setOpenSaved: Dispatch<SetStateAction<boolean>>,
 	combatants: Combatant[],
 	newCombatant: (
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void
 }

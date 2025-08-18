@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
 import Stack from '@mui/material/Stack'
@@ -7,11 +6,11 @@ import { tabsClasses } from '@mui/material/Tabs'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown'
-import titleimage from '../../images/title.png'
+import titleImage from '../../images/title.png'
 
 import MenuButton from './MenuButton'
 import SideMenuMobile from './SideMenuMobile'
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 
 const Toolbar = styled(MuiToolbar)({
 	width: '100%',
@@ -35,7 +34,7 @@ interface AppNavbarProps {
 }
 
 export default function AppNavbar({ tab, setTab }: AppNavbarProps) {
-	const [open, setOpen] = React.useState(false)
+	const [open, setOpen] = useState(false)
 
 	const toggleDrawer = (newOpen: boolean) => () => {
 		setOpen(newOpen)
@@ -72,7 +71,7 @@ export default function AppNavbar({ tab, setTab }: AppNavbarProps) {
 						sx={{ justifyContent: 'left', mr: 'auto' }}
 					>
 						<img
-							src={titleimage}
+							src={titleImage}
 							alt='Logo'
 							style={{ height: '75px' }}
 						/>

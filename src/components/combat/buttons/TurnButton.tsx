@@ -1,11 +1,10 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
-import * as React from 'react'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {Combatant} from "../Combatant";
 
 interface TurnButtonProps {
@@ -17,7 +16,7 @@ interface TurnButtonProps {
 
 export default function TurnButton({ setSelected, combatants, turn, setTurn }: TurnButtonProps) {
 
-	const [openTurn, setOpenTurn] = React.useState(false)
+	const [openTurn, setOpenTurn] = useState(false)
 
 	return (
 		<>

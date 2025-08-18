@@ -1,10 +1,9 @@
 import Button from '@mui/material/Button'
 import { Delete } from '@mui/icons-material'
-import * as React from 'react'
 
 import storage from '../../../util/storage'
 import Confirmation from '../../../util/Confirmation'
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 
 interface DeleteButtonProps {
     value: string,
@@ -13,7 +12,7 @@ interface DeleteButtonProps {
 
 export default function DeleteButton({ value, setValue }: DeleteButtonProps) {
 
-	const [openConfirmation, setOpenConfirmation] = React.useState(false)
+	const [openConfirmation, setOpenConfirmation] = useState(false)
 
 	return (
 		<>

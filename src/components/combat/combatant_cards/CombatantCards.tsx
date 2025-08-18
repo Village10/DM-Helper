@@ -11,7 +11,6 @@ import {
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import PersonIcon from '@mui/icons-material/Person'
-import * as React from 'react'
 import Stack from '@mui/material/Stack'
 
 import AddHealth from './AddHealth'

@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography'
-import * as React from 'react'
 import { Autocomplete, CircularProgress, TextField } from '@mui/material'
 import Stack from '@mui/material/Stack'
 import { getDoc, doc } from 'firebase/firestore'
@@ -12,7 +11,6 @@ import {Dispatch, SetStateAction, useEffect, useState} from 'react'
 interface SearchProps {
     search: string,
     setSearch: Dispatch<SetStateAction<string>>,
-    // FIX: Check if this is correct
     wikiData: { name: string, tags: string[] }[] | null
 }
 
@@ -83,13 +81,13 @@ export default function Search({search, setSearch, wikiData}: SearchProps) {
 								input: {
 									...params.InputProps,
 									endAdornment: (
-										<React.Fragment>
+										<>
 											{!wikiData ? <CircularProgress
 												color='inherit'
 												size={20}
 											/> : null}
 											{params.InputProps?.endAdornment}
-										</React.Fragment>
+										</>
 									)
 								}
 							}}

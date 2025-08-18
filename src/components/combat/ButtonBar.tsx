@@ -1,5 +1,4 @@
 import Stack from '@mui/material/Stack'
-import * as React from 'react'
 import { alpha, useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import IconButton from '@mui/material/IconButton'
@@ -14,7 +13,7 @@ import DeleteButton from './buttons/delete_button/DeleteButton'
 import DetailsButton from './buttons/DetailsButton'
 import TurnButton from './buttons/TurnButton'
 import {Combatant} from "./Combatant";
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useRef, useState} from "react";
 import {Character} from "../characters/Character";
 
 interface ButtonBarProps {
@@ -26,11 +25,11 @@ interface ButtonBarProps {
 	setSearch: Dispatch<SetStateAction<string>>,
 	combatants: Combatant[],
 	setCombatants: Dispatch<SetStateAction<Combatant[]>>,
-	newCombatant:(
+	newCombatant: (
 		name: string,
 		maxHealth: string,
 		armor: string,
-		character?: Character | null,
+		character?: Character | string | null,
 		initiative?: string | null
 	) => void,
 	turn: number,
@@ -41,8 +40,8 @@ export default function ButtonBar({ selected, setSelected, openEdit, setOpenEdit
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-	const [open, setOpen] = React.useState(false)
-	const drop = React.useRef<HTMLButtonElement>(null)
+	const [open, setOpen] = useState(false)
+	const drop = useRef<HTMLButtonElement>(null)
 
 	const primaryButtons =
 		<Stack
@@ -72,7 +71,7 @@ export default function ButtonBar({ selected, setSelected, openEdit, setOpenEdit
 				{...{ selected }}
 			/>
 			<NewButton
-				{...{ selected, setSelected, combatants, newCombatant }}
+				{...{ setSelected, combatants, newCombatant }}
 			/>
 			<DeleteButton
 				{...{ selected, setSelected, combatants, setCombatants }}

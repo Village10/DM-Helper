@@ -1,14 +1,14 @@
 import Grid from '@mui/material/Grid2'
 import { FormControlLabel } from '@mui/material'
 import Switch from '@mui/material/Switch'
-import * as React from 'react'
 
 import storage from '../../../util/storage'
 import settingsTitle from '../../../util/settings/settingsTitle'
+import {useState} from "react";
 
 export default function ConfirmationSettings() {
 
-	const [reRender, setReRender] = React.useState(false)
+	const [reRender, setReRender] = useState(false)
 
 	return (
 		<Grid

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { alpha, Theme, Components } from '@mui/material/styles'
 import { toggleButtonGroupClasses } from '@mui/material/ToggleButtonGroup'
 import { toggleButtonClasses } from '@mui/material/ToggleButton'

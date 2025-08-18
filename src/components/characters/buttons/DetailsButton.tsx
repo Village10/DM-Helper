@@ -1,6 +1,5 @@
 import Button from '@mui/material/Button'
 import { CardActionArea, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
-import * as React from 'react'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
@@ -8,13 +7,14 @@ import Card from '@mui/material/Card'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import LaunchIcon from '@mui/icons-material/Launch'
 import Box from '@mui/material/Box'
+import {useState} from "react";
 
 export default function DetailsButton({ selected, setSelected, setTab, setSearch }) {
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-	const [openEdit, setOpenEdit] = React.useState(false)
+	const [openEdit, setOpenEdit] = useState(false)
 
 	return (
 		<>

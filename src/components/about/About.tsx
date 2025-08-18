@@ -1,6 +1,5 @@
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import * as React from 'react'
 import { Link } from '@mui/material'
 
 export default function About() {

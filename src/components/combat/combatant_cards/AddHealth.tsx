@@ -1,6 +1,5 @@
 import { KeyboardArrowUp } from '@mui/icons-material'
 import IconButton from '@mui/material/IconButton'
-import * as React from 'react'
 
 import changeHealth from '../../../util/combat/changeHealth'
 import {Combatant} from "../Combatant";

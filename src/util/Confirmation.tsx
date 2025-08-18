@@ -1,27 +1,27 @@
 import { Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel } from '@mui/material'
 import Button from '@mui/material/Button'
-import * as React from 'react'
 
 import storage from './storage'
+import {Dispatch, FormEvent, SetStateAction, useEffect, useState} from "react";
 
 interface ConfirmationProps {
     title: string,
     name: string,
     open: boolean,
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    setOpen: Dispatch<SetStateAction<boolean>>,
     runFunction: () => void,
 }
 
 export default function Confirmation({ title, name, open, setOpen, runFunction }: ConfirmationProps) {
 
-	const [tempConfirm, setTempConfirm] = React.useState(false)
-	const [confirm, setConfirm] = React.useState(() => {
+	const [tempConfirm, setTempConfirm] = useState(false)
+	const [confirm, setConfirm] = useState(() => {
 		storage('createIfNeeded', true, 'confirmations', name)
 		return storage('get', '', 'confirmations', name)
 	})
 
-	React.useEffect(() => {storage('set', confirm, 'confirmations', name)}, [confirm, name])
-	React.useEffect(() => {
+	useEffect(() => {storage('set', confirm, 'confirmations', name)}, [confirm, name])
+	useEffect(() => {
 		if (open && !confirm) {
 			runFunction()
 			setOpen(false)
@@ -40,7 +40,7 @@ export default function Confirmation({ title, name, open, setOpen, runFunction }
 				}}
 				PaperProps={{
 					component: 'form',
-					onSubmit: (event: React.FormEvent) => {
+					onSubmit: (event: FormEvent) => {
 						event.preventDefault()
 						if (tempConfirm) {
 							setConfirm(false)
