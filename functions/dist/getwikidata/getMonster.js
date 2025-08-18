@@ -1,0 +1,92 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const axiosCall_1 = __importDefault(require("../utils/axiosCall"));
+const cheerio = __importStar(require("cheerio"));
+async function getMonster(monster) {
+    if (monster.url) {
+        const res = await (0, axiosCall_1.default)(monster.url);
+        if (res?.data) {
+            const bodyHtml = cheerio.load(res.data)("body").first().html() ?? "";
+            const cheerioData = cheerio.load(bodyHtml);
+            const source = cheerioData(".source").first().text();
+            cheerioData("h1").remove();
+            cheerioData("body").prepend(`<h1>${monster.name}</h1>`);
+            // Page title size and underline
+            cheerioData("h1").attr("style", "font-size: 32px; border-bottom: 3px solid;");
+            // Columns
+            cheerioData(".col").attr("style", "display: grid; grid-template-columns: 1fr 1fr; gap: 20px");
+            cheerioData("head").append(`
+            <style>
+            @media (max-width: 899px) {
+              .col {
+                grid-template-columns: 1fr !important;
+              }
+            }
+          </style>
+        `);
+            // Format picture if there is one
+            cheerioData(".col2").each((_index, element) => {
+                const $element = cheerioData(element);
+                if ($element.children().length === 0) {
+                    $element.html("<div class=\"picture\"><h2 >No<br>Image</h2></div>");
+                }
+            });
+            cheerioData(".picture img").attr("style", "border: 2px solid red; width: 304px; height: auto; max-width: 75%;  margin: 0 auto;");
+            cheerioData(".picture h2").attr("style", "border: 2px solid red; width: 304px; height: auto; max-width: 75%;  margin: 0 auto; padding: 35px");
+            cheerioData(".picture").attr("style", "text-align: center; width: 100%;");
+            // Convert svgs to lines
+            cheerioData("svg").replaceWith("<hr>");
+            // Remove links to other languages
+            cheerioData(".trad").remove();
+            // Remove breadcrumbs
+            cheerioData("ol[itemscope][itemtype=\"http://schema.org/BreadcrumbList\"]").remove();
+            // Remove empty div
+            cheerioData(".orange").remove();
+            // Style attributes
+            cheerioData(".carac").attr("style", "display: inline-block; width: 16.6%; text-align: center");
+            // Style subheadings
+            cheerioData(".rub").attr("style", "border-bottom: 2px solid; font-variant: small-caps; margin: 6px 0 4px 0; font-size: 1.5rem");
+            // Add "Source:" to sources
+            cheerioData(".source").prepend("<Strong>Source: </Strong>");
+            // Convert links to text
+            cheerioData("a").each((_index, element) => {
+                cheerioData(element).replaceWith(cheerioData(element).text());
+            });
+            return {
+                name: monster.name,
+                html: cheerioData.html(),
+                tags: [source, "monster"],
+            };
+        }
+        else {
+            return null;
+        }
+    }
+}
+exports.default = getMonster;

@@ -9,51 +9,40 @@ import AppNavbar from './components/navigation/AppNavbar'
 import Header from './components/navigation/Header'
 import Combat from './components/combat/Combat'
 import Characters from './components/characters/Characters'
-import Maps from './components/maps/Maps'
 import Notes from './components/notes/Notes'
 import Search from './components/search/Search'
 import Settings from './components/settings/Settings'
 import About from './components/about/About'
 import SideMenu from './components/navigation/SideMenu'
 import AppTheme from './shared-theme/AppTheme'
-import {
-	chartsCustomizations,
-	dataGridCustomizations,
-	datePickersCustomizations,
-	treeViewCustomizations
-} from './theme/customizations'
 import storage from './util/storage'
 import getWikiData from './util/getWikiData'
 
-const xThemeComponents = {
-	...chartsCustomizations,
-	...dataGridCustomizations,
-	...datePickersCustomizations,
-	...treeViewCustomizations
-}
-
+// FIX: Any type prop
 export default function App(props: any) {
 
 	if (!localStorage.getItem('mui-mode')) {
 		localStorage.setItem('mui-mode', 'dark')
 	}
 
-	storage('createIfNeeded', true, 'Confirm', 'deleting a combatant')
-	storage('createIfNeeded', true, 'Confirm', 'deleting a character')
-	storage('createIfNeeded', true, 'Confirm', 'deleting a note')
-	const [wikiData, setWikiData] = React.useState<{ name: string; tags: string[] }[] | null>(null)
+	storage('createIfNeeded', true, 'confirmations', 'deleting a character')
+	storage('createIfNeeded', true, 'confirmations', 'deleting a note')
+	const [wikiData, setWikiData] = React.useState<{ name: string, tags: string[] }[] | null>(null)
 	const [search, setSearch] = React.useState<string>('')
-	const [tab, setTab] = React.useState<keyof typeof tabs>('Combat')
+	const [tab, setTab] = React.useState<string>('Combat')
 
 	const theme = useTheme()
 	const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-	// TODO: Find new name for app
-	// TODO: Make app function offline
-	// TODO: Transfer from CRA to Vite
+	// FIX: Find new name
+	// FIX: Make app function offline
 	// TODO: Transfer from js to tsx
-	// TODO: Use Redux to stop prop drilling
 	// TODO: Add tutorial
+	// TODO: Make tabs functionality cleaner
+	// TODO: Make feedback tab
+	// FEATURE: Use Redux to stop prop drilling
+	// FEATURE: Add to DriveThroughRPG
+	// FEATURE: Dice roller
 
 	React.useEffect(() => {
 		getWikiData(setWikiData)
@@ -65,23 +54,19 @@ export default function App(props: any) {
 		}
 	}, [tab])
 
-	// TODO: Make tabs functionality cleaner
-	// TODO: Make feedback tab
 	const tabs = {
-		Combat: Combat,
-		Characters: Characters,
-		Maps: Maps,
-		Notes: Notes,
-		Search: Search,
-		Settings: Settings,
-		About: About
+		Combat,
+		Characters,
+		Notes,
+		Search,
+		Settings,
+		About
 	}
 	const SelectedTab = tabs[tab]
 
 	return (
 		<AppTheme
 			{...props}
-			themeComponents={xThemeComponents}
 		>
 			<CssBaseline
 				enableColorScheme

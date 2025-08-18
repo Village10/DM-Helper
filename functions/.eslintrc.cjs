@@ -20,6 +20,10 @@ module.exports = {
     "valid-jsdoc": "off",
     "quotes": ["error", "double", {"allowTemplateLiterals": true}],
   },
+  ignorePatterns: [
+  	"/dist/**/*",
+	"/node_modules/**/*"
+  ],
   overrides: [
     {
       files: ["**/*.spec.*"],
